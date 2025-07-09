@@ -17,3 +17,55 @@ p {
 .title + p {
   color: green;
 }
+
+a[title] {
+  color: red;
+}
+
+a[href="https://example.com"] {
+  color: green;
+}
+
+a[href*="example"] {
+  font-size: 20px;
+}
+
+a[href$=".org" i] {
+  font-weight: bold;
+}
+
+li[class~="child"] {
+  padding: 20px;
+}
+
+.list li {
+  width: 300px;
+  height: 200px;
+  background-color: gray;
+}
+
+.first-item a:hover {
+  color: blue;
+}
+
+.child:first-child {
+  background-color: yellow;
+}
+
+.child:last-child {
+  background-color: red;
+}
+
+.third-item::before {
+  display: block;
+  content: "";
+  border-top: 10px blue solid;
+  width: 100%;
+}
+
+.third-item::after {
+  display: block;
+  content: "";
+  border-top: 10px green solid;
+  width: 100%;
+}
