@@ -1,0 +1,19 @@
+p {
+  color: purple;
+}
+
+.container p {
+  color: red;
+}
+
+.container > p {
+  color: blue;
+}
+
+.title ~ p {
+  font-weight: bold;
+}
+
+.title + p {
+  color: green;
+}
