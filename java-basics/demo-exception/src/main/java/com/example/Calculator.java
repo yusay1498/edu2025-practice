@@ -1,11 +1,13 @@
 package com.example;
 
 public class Calculator {
-    public int div (int a, int b) {
-        if (b == 0) {
-            throw new ArithmeticException("Division by zero");
-        } else {
-            return a / b;
-        }
+    private final Divider divider;
+
+    public Calculator(Divider divider) {
+        this.divider = divider;
+    }
+
+    public int calculate(int a, int b) {
+        return divider.div(a, b);
     }
 }

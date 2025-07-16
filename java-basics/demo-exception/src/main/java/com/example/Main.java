@@ -2,17 +2,20 @@ package com.example;
 
 public class Main {
     public static void main(String[] args) {
+        Divider divider = new Divider();
 
-        Calculator calculator = new Calculator();
+        Calculator calculator = new Calculator(divider);
 
         int a = 10;
         int b = 0;
 
         try {
-            int answer = calculator.div(a, b);
+            int answer = calculator.calculate(a, b);
             System.out.println(answer);
         }  catch (ArithmeticException e) {
             System.err.println(e.getMessage());
         }
+
+        System.out.println("end!");
     }
 }
