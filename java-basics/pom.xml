@@ -9,6 +9,7 @@
 	<modules>
 		<module>survey3</module>
         <module>demo-exception</module>
+        <module>demo-file</module>
     </modules>
 	<properties>
 		<java.version>21</java.version>
