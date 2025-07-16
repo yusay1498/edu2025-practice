@@ -12,7 +12,7 @@ public class Main {
         try {
             int answer = calculator.calculate(a, b);
             System.out.println(answer);
-        }  catch (ArithmeticException e) {
+        }  catch (Exception e) {
             System.err.println(e.getMessage());
         }
 

@@ -7,7 +7,7 @@ public class Calculator {
         this.divider = divider;
     }
 
-    public int calculate(int a, int b) {
+    public int calculate(int a, int b) throws Exception {
         return divider.div(a, b);
     }
 }
