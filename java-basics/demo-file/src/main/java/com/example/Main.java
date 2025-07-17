@@ -1,15 +1,16 @@
 package com.example;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class Main {
     public static void main(String[] args) {
-        Path path = Path.of("fuga.txt");
-
-        System.out.println(path);
-        System.out.println(path.toAbsolutePath());
-
-        Path path2 = Path.of("");
-        System.out.println(path2.toAbsolutePath());
+        Path path = Path.of("temp");        // 作成するディレクトリのパス
+        try {
+            Files.createDirectory(path);    // ディレクトリを作成する
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
