@@ -5,7 +5,7 @@ import java.nio.file.Path;
 
 public class Main {
     public static void main(String[] args) throws Exception{
-        Path path = Path.of("foo/bar");        // 作成するディレクトリのパス
-        Files.createDirectories(path);      //複数のディレクトリを作る
+        Path path = Path.of("foo/bar/note.txt");        // ファイルのパス
+        Files.createFile(path);                            //ファイルを作る
     }
 }
