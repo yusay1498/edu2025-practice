@@ -11,7 +11,8 @@
         <module>demo-exception</module>
         <module>demo-file</module>
         <module>demo-file-nio</module>
-    </modules>
+		<module>demo-thread</module>
+	</modules>
 	<properties>
 		<java.version>21</java.version>
 	</properties>
