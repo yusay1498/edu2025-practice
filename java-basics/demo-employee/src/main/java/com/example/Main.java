@@ -1,5 +1,7 @@
 package com.example;
 
+import java.util.Optional;
+
 public class Main {
     public static void main(String[] args) {
         System.out.println("record Class");
@@ -26,5 +28,42 @@ public class Main {
         System.out.println("#####Generics#####");
         DemoGenerics<Employee> demoGenerics = new DemoGenerics<>(alice);
         System.out.println(demoGenerics.getSomeObject().name());
+
+        System.out.println("#####Optional#####");
+        EmployeeMemoryRepository employeeMemoryRepository = new EmployeeMemoryRepository();
+
+        Employee carol = new Employee(
+                3,
+                "carol",
+                35,
+                "経理部",
+                350000,
+                Gender.FEMALE
+        );
+        Employee david = new Employee(
+                4,
+                "david",
+                40,
+                "システム部",
+                400000,
+                Gender.MALE
+        );
+
+        employeeMemoryRepository.saveEmployee(carol);
+        employeeMemoryRepository.saveEmployee(david);
+
+        Optional<Employee> employeeId3 = employeeMemoryRepository.getById(3);
+        System.out.println(employeeId3.orElseThrow().name());
+
+        Optional<Employee> employeeId1 = employeeMemoryRepository.getById(1);
+        System.out.println(employeeId1.orElse(
+                new Employee(
+                        0,
+                        "John Doe",
+                        0,
+                        "none",
+                        0,
+                        Gender.OTHER)
+        ));
     }
 }
