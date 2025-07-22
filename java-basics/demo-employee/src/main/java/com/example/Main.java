@@ -11,5 +11,14 @@ public class Main {
                 250000
         );
         System.out.println("alice -> " + alice);
+
+        Employee bob = new Employee(
+                -1,
+                "bob",
+                30,
+                "システム部",
+                300000
+        );
+        System.out.println("bob -> " + bob);
     }
 }
