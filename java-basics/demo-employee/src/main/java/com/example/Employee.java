@@ -5,7 +5,8 @@ public record Employee(
         String name,
         int age,
         String department,
-        int fee
+        int fee,
+        Gender gender
 ) {
     public Employee {
         if (id < 0) throw new IllegalArgumentException("Employee id cannot be less than 0");

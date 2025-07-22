@@ -8,7 +8,8 @@ public class Main {
                 "alice",
                 25,
                 "経理部",
-                250000
+                250000,
+                Gender.FEMALE
         );
         System.out.println("alice -> " + alice);
 
@@ -17,7 +18,8 @@ public class Main {
                 "bob",
                 30,
                 "システム部",
-                300000
+                300000,
+                Gender.MALE
         );
         System.out.println("bob -> " + bob);
     }
