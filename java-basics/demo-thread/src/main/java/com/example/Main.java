@@ -2,11 +2,13 @@ package com.example;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("---- start main ----");
-
-        Thread t1 = new Thread(new Runnable1());
-        t1.start();
-
-        System.out.println("---- end main ----");
+        for (int i = 0; i < 10; i++) {
+            final int index = i; // ラムダ式や内部クラスで使うにはfinal
+            new Thread(() -> {
+                System.out.println("Thread " + index + " started");
+                // ここに並列処理を書きます
+            }).start();
+        }
+        
     }
 }
