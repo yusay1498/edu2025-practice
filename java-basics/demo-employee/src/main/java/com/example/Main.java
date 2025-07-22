@@ -1,6 +1,6 @@
 package com.example;
 
-import java.util.Optional;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -65,5 +65,58 @@ public class Main {
                         0,
                         Gender.OTHER)
         ));
+
+        System.out.println("#####Collection#####");
+        List<Employee> employees = List.of(
+                new Employee(1, "alice", 25, "経理部", 250000, Gender.FEMALE),
+                new Employee(2, "bob", 30, "システム部", 300000, Gender.MALE),
+                new Employee(3, "carol", 35, "経理部", 350000, Gender.FEMALE),
+                new Employee(4, "dave", 40, "システム部", 400000, Gender.MALE),
+                new Employee(5, "eve", 45, "システム部", 500000, Gender.OTHER)
+        );
+
+        for (Employee employee : employees) {
+            System.out.println(employee.name());
+        }
+
+        List<Employee> emptyList = Collections.emptyList();
+        for (Employee employee : emptyList) {
+            System.out.println(employee.name());
+        }
+
+        System.out.println("#####Map.of#####");
+        Map<String, Integer> feeMap = Map.of(
+                "alice", 250000,
+                "bob", 300000,
+                "carol", 350000,
+                "dave", 400000,
+                "eve", 500000
+        );
+
+        for (Map.Entry<String, Integer> entry : feeMap.entrySet()) {
+            System.out.println(entry.getKey() + " -> " + entry.getValue());
+        }
+
+        System.out.println("#####ArrayList#####");
+        List<Employee> employeeArrayList = new ArrayList<>();
+        employeeArrayList.add(alice);
+        employeeArrayList.add(bob);
+        employeeArrayList.add(carol);
+        employeeArrayList.add(david);
+
+        for (Employee employee : employeeArrayList) {
+            System.out.println(employee.name());
+        }
+
+        System.out.println("#####LinkedList####");
+        List<Employee> employeeLinkedList = new LinkedList<>();
+        employeeLinkedList.add(alice);
+        employeeLinkedList.add(bob);
+        employeeLinkedList.add(carol);
+        employeeLinkedList.add(david);
+
+        for (Employee employee : employeeLinkedList) {
+            System.out.println(employee.name());
+        }
     }
 }
