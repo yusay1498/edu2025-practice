@@ -14,7 +14,7 @@ public class Main {
         System.out.println("alice -> " + alice);
 
         Employee bob = new Employee(
-                -1,
+                1,
                 "bob",
                 30,
                 "システム部",
@@ -22,5 +22,9 @@ public class Main {
                 Gender.MALE
         );
         System.out.println("bob -> " + bob);
+
+        System.out.println("#####Generics#####");
+        DemoGenerics<Employee> demoGenerics = new DemoGenerics<>(alice);
+        System.out.println(demoGenerics.getSomeObject().name());
     }
 }
