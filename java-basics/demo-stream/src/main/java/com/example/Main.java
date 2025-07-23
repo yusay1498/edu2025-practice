@@ -46,5 +46,21 @@ public class Main {
         );
 
         List<Employee> employees = List.of(alice, bob, carol, david, eve);
+
+        System.out.println("#####filter#####");
+        employees.stream()
+                .filter(employee -> employee.department().equals("システム部"))
+                .forEach(System.out::println);
+
+        System.out.println("#####anyMatch, noneMatch#####");
+        boolean isOverThirtyYearsOldExist = employees.stream().anyMatch(employee -> employee.age() > 30);
+        if (isOverThirtyYearsOldExist) {
+            System.out.println("30歳以上の人がいます");
+        }
+
+        boolean isNotExistOverFiftyYearsOld = employees.stream().noneMatch(employee -> employee.age() > 50);
+        if (isNotExistOverFiftyYearsOld) {
+            System.out.println("50歳以上の人はいません");
+        }
     }
 }
