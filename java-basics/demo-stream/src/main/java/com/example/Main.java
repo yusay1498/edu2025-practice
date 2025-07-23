@@ -62,5 +62,45 @@ public class Main {
         if (isNotExistOverFiftyYearsOld) {
             System.out.println("50歳以上の人はいません");
         }
+
+        System.out.println("#####findFirst#####");
+        Optional<Employee> engineer = employees.stream().
+                filter(employee -> employee.department().equals("システム部"))
+                .findFirst();
+        System.out.println(engineer.orElseThrow().name());
+
+        System.out.println("#####reduce#####");
+        Employee mergedEmployee = employees.stream()
+                .reduce(
+                        new Employee(
+                                0,
+                                "noname",
+                                0,
+                                "no department",
+                                0,
+                                Gender.OTHER
+                        ),
+                        (employee1, employee2) -> new Employee(
+                                employee1.id() + employee2.id(),
+                                employee1.name() + employee2.name(),
+                                employee1.age() + employee2.age(),
+                                employee1.department() + employee2.department(),
+                                employee1.fee() + employee2.fee(),
+                                employee1.gender()
+                        )
+                );
+        System.out.println(mergedEmployee);
+
+        EmployeeMemoryRepository employeeMemoryRepository = employees.stream()
+                .reduce(
+                        new EmployeeMemoryRepository(),
+                        (acc, cur) -> {
+                            acc.saveEmployee(cur);
+                            return acc;
+                        },
+                        (acc1, acc2) -> acc1
+                );
+        Optional<Employee> employeeId1 = employeeMemoryRepository.getById(1);
+        System.out.println(employeeId1.orElseThrow().name());
     }
 }
