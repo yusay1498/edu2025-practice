@@ -180,5 +180,25 @@ public class Main {
         for (Map.Entry<Integer, Employee> entry : employeeTreeMap.entrySet()) {
             System.out.println(entry.getKey() + " -> " + entry.getValue());
         }
+
+        System.out.println("#####Queue#####");
+        Queue<Employee> employeeQueue = new ArrayDeque<>();
+        employeeQueue.add(alice);
+        employeeQueue.add(bob);
+        employeeQueue.add(carol);
+        employeeQueue.add(david);
+
+        System.out.println(employeeQueue.poll());
+        System.out.println(employeeQueue.poll());
+
+        System.out.println("#####Stack#####");
+        Stack<Employee> employeeStack = new Stack<>();
+        employeeStack.push(alice);
+        employeeStack.push(bob);
+        employeeStack.push(carol);
+        employeeStack.push(david);
+
+        System.out.println(employeeStack.pop());
+        System.out.println(employeeStack.pop());
     }
 }
