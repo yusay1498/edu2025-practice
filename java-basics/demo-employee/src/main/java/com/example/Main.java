@@ -16,7 +16,7 @@ public class Main {
         System.out.println("alice -> " + alice);
 
         Employee bob = new Employee(
-                1,
+                2,
                 "bob",
                 30,
                 "システム部",
@@ -148,6 +148,37 @@ public class Main {
         employeeTreeSet.add(david.name());
         for (String employeeName : employeeTreeSet) {
             System.out.println(employeeName);
+        }
+
+        System.out.println("#####Map#####");
+        System.out.println("#####HashMap#####");
+        Map<Integer, Employee> employeeHashMap = new HashMap<>();
+        employeeHashMap.put(alice.id(), alice);
+        employeeHashMap.put(bob.id(), bob);
+        employeeHashMap.put(carol.id(), carol);
+        employeeHashMap.put(david.id(), david);
+        for (Map.Entry<Integer, Employee> entry : employeeHashMap.entrySet()) {
+            System.out.println(entry.getKey() + " -> " + entry.getValue());
+        }
+
+        System.out.println("#####LinkedHashMap#####");
+        Map<Integer, Employee> employeeLinkedHashMap = new LinkedHashMap<>();
+        employeeLinkedHashMap.put(alice.id(), alice);
+        employeeLinkedHashMap.put(bob.id(), bob);
+        employeeLinkedHashMap.put(carol.id(), carol);
+        employeeLinkedHashMap.put(david.id(), david);
+        for (Map.Entry<Integer, Employee> entry : employeeLinkedHashMap.entrySet()) {
+            System.out.println(entry.getKey() + " -> " + entry.getValue());
+        }
+
+        System.out.println("#####TreeMap#####");
+        Map<Integer, Employee> employeeTreeMap = new TreeMap<>();
+        employeeTreeMap.put(alice.id(), alice);
+        employeeTreeMap.put(bob.id(), bob);
+        employeeTreeMap.put(carol.id(), carol);
+        employeeTreeMap.put(david.id(), david);
+        for (Map.Entry<Integer, Employee> entry : employeeTreeMap.entrySet()) {
+            System.out.println(entry.getKey() + " -> " + entry.getValue());
         }
     }
 }
