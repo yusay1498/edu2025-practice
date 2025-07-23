@@ -118,5 +118,36 @@ public class Main {
         for (Employee employee : employeeLinkedList) {
             System.out.println(employee.name());
         }
+
+        System.out.println("#####Set#####");
+        System.out.println("#####HashSet#####");
+        Set<Employee> employeeHashSet = new HashSet<>();
+        employeeHashSet.add(alice);
+        employeeHashSet.add(bob);
+        employeeHashSet.add(carol);
+        employeeHashSet.add(david);
+        for (Employee employee : employeeHashSet) {
+            System.out.println(employee.name());
+        }
+
+        System.out.println("#####LinkedHashSet#####");
+        Set<Employee> employeeLinkedHashSet = new LinkedHashSet<>();
+        employeeLinkedHashSet.add(alice);
+        employeeLinkedHashSet.add(bob);
+        employeeLinkedHashSet.add(carol);
+        employeeLinkedHashSet.add(david);
+        for (Employee employee : employeeLinkedHashSet) {
+            System.out.println(employee.name());
+        }
+
+        System.out.println("#####TreeSet#####");
+        Set<String> employeeTreeSet = new TreeSet<>();
+        employeeTreeSet.add(alice.name());
+        employeeTreeSet.add(bob.name());
+        employeeTreeSet.add(carol.name());
+        employeeTreeSet.add(david.name());
+        for (String employeeName : employeeTreeSet) {
+            System.out.println(employeeName);
+        }
     }
 }
