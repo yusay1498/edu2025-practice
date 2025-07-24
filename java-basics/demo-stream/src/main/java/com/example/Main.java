@@ -1,6 +1,9 @@
 package com.example;
 
 import java.util.*;
+import java.util.function.BiFunction;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
@@ -102,5 +105,63 @@ public class Main {
                 );
         Optional<Employee> employeeId1 = employeeMemoryRepository.getById(1);
         System.out.println(employeeId1.orElseThrow().name());
+
+        System.out.println("#####Lambda#####");
+        EmployeeMemoryRepository employeeMemoryRepository2 = employees.stream()
+                .reduce(
+                        new EmployeeMemoryRepository(),
+                        new BiFunctionImpl(),
+                        (acc1, acc2) -> acc1
+                );
+
+        EmployeeMemoryRepository employeeMemoryRepository3 = employees.stream()
+                .reduce(
+                        new EmployeeMemoryRepository(),
+                        new BiFunction<EmployeeMemoryRepository, Employee, EmployeeMemoryRepository>() {
+                            @Override
+                            public EmployeeMemoryRepository apply(EmployeeMemoryRepository employeeMemoryRepository, Employee employee) {
+                                employeeMemoryRepository.saveEmployee(employee);
+                                return employeeMemoryRepository;
+                            }
+                        },
+                        (acc1, acc2) -> acc1
+                );
+
+        System.out.println("#####collect#####");
+        Map<String, Integer> feeMap = employees.stream()
+                .collect(Collectors.toMap(
+                        employee -> employee.name(),
+                        employee -> employee.fee()
+                ));
+        System.out.println(feeMap);
+
+        System.out.println("#####toList#####");
+        System.out.println("#####Collectors.toList#####");
+        List<Employee> femaleEmployees = employees.stream()
+                .filter(employee -> employee.gender().equals(Gender.FEMALE))
+                .collect(Collectors.toList());
+        System.out.println(femaleEmployees);
+
+        femaleEmployees.add(alice);
+        System.out.println(femaleEmployees);
+
+        System.out.println("#####Comparators.toUnmodifiableList#####");
+        List<Employee> maleEmployees = employees.stream()
+                .filter(employee -> employee.gender().equals(Gender.MALE))
+                .collect(Collectors.toUnmodifiableList());
+        System.out.println(maleEmployees);
+
+        System.out.println("#####Stream.toList#####");
+        List<Employee> systemDepartmentEmployees = employees.stream()
+                .filter(employee -> employee.department().equals("システム部"))
+                .toList();
+        System.out.println(systemDepartmentEmployees);
+
+        System.out.println("#####Collectors.toUnmodifiableList と Stream.toListの違い#####");
+        List<Employee> nullableEmployees = Stream.of(alice, alice, alice, alice, alice).toList();
+        System.out.println(nullableEmployees);
+
+        List<Employee> nullSafeEmployees = Stream.of(alice, alice, alice, alice, alice).collect(Collectors.toUnmodifiableList());
+        System.out.println(nullSafeEmployees);
     }
 }
