@@ -42,9 +42,26 @@ public class PersonRestController {
     ) {
         Person updatePerson = new Person("0001", "Alice", 20);
 
-        if (!Objects.equals(id, updatePerson.id())) {
+        if (!Objects.equals(id, updatePerson.getId())) {
             throw new IllegalArgumentException("not match");
         }
         return person;
+    }
+
+    @PatchMapping("/{id}")
+    public Person patch(
+            @PathVariable("id") String id,
+            @RequestBody PersonPatchRequest personPatch
+    ) {
+        Person exitedPerson = new Person(
+                "0001", "alice", 7);
+
+        Person updatedPerson = exitedPerson.copy(
+                personPatch.getId(),
+                personPatch.getName(),
+                personPatch.getAge()
+        );
+
+        return updatedPerson;
     }
 }
