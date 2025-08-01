@@ -17,7 +17,8 @@ public class PersonRestController {
         );
     }
 
-    @GetMapping("{id}")
+//    @GetMapping("{id}")
+    @GetMapping("{id:^[0-9]{4}}")
     public Person getById(
             @PathVariable String id
     ) {
