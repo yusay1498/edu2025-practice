@@ -56,12 +56,10 @@ public class PersonRestController {
         Person exitedPerson = new Person(
                 "0001", "alice", 7);
 
-        Person updatedPerson = exitedPerson.copy(
+        return exitedPerson.copy(
                 personPatch.getId(),
                 personPatch.getName(),
                 personPatch.getAge()
         );
-
-        return updatedPerson;
     }
 }
