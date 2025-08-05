@@ -1,3 +1,7 @@
 spring:
   application:
     name: demo-spring-mvc
+
+logging:
+  level:
+    root: debug

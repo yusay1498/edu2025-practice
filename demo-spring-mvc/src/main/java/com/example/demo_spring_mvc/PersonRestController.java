@@ -1,5 +1,7 @@
 package com.example.demo_spring_mvc;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
@@ -7,8 +9,12 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/persons")
 public class PersonRestController {
+    private final Logger logger = LoggerFactory.getLogger(PersonRestController.class);
+
     @GetMapping
     public Person get() {
+        logger.debug("Invoke get method");
+
         return new Person(
                 "0001",
                 "Alice",
@@ -21,6 +27,8 @@ public class PersonRestController {
     public Person getById(
             @PathVariable String id
     ) {
+        logger.debug("Invoke getById method args{}", id);
+
         return new Person(
                 id,
                 "Alice",
