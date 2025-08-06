@@ -1,3 +1,7 @@
 spring:
   application:
     name: demo-jdbc
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ojt
+    username: postgres
+    password: postgres
