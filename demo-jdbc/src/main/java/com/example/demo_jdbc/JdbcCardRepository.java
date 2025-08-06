@@ -1,11 +1,9 @@
 package com.example.demo_jdbc;
 
 import org.springframework.jdbc.core.DataClassRowMapper;
-import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -18,7 +16,7 @@ public class JdbcCardRepository {
     }
     
     public List<Card> findHighPoints() {
-        List<Card> cards = jdbcOperations.query("""
+        return jdbcOperations.query("""
                 WITH
                   card_sum AS (
                     SELECT
@@ -40,7 +38,5 @@ public class JdbcCardRepository {
                 """,
                 new MapSqlParameterSource(),
                 DataClassRowMapper.newInstance(Card.class));
-
-        return cards;
     }
 }
