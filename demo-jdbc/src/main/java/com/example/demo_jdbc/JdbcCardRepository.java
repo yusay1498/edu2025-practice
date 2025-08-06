@@ -14,6 +14,10 @@ public class JdbcCardRepository {
     }
     
     public List<Card> findHighPoints() {
-        return null;
+        return List.of(
+                new Card(
+                        1, "card", 1, 1, 1
+                )
+        );
     }
 }
