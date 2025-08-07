@@ -19,4 +19,9 @@ public class CardRestController {
     public List<Card> getHighPoints() {
         return jdbcCardRepository.findHighPoints();
     }
+
+    @GetMapping("/highPoints2")
+    public List<Card> getHighPointsResultSet() {
+        return jdbcCardRepository.findHighPointsResultSet();
+    }
 }
