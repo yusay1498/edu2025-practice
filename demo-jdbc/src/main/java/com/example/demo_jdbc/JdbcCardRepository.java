@@ -73,4 +73,32 @@ public class JdbcCardRepository {
                     return new Card(id, name, level, elementId, summary);
                 });
     }
+
+    public List<Card> findHighPointByLevel(int level) {
+        return jdbcOperations.query("""
+                WITH
+                  card_sum AS (
+                    SELECT
+                      card.id, card.name, card.level, card.element_id, (card.top + card.right + card.bottom + card.left) AS summary
+                    FROM card
+                  ),
+                  card_sum_max AS (
+                    SELECT
+                      card.level, MAX(card.top + card.left + card.bottom + card.right) AS summary_max
+                    FROM card
+                    GROUP BY card.level
+                  )
+                
+                SELECT * FROM card_sum INNER JOIN card_sum_max
+                ON  card_sum.level = card_sum_max.level
+                AND card_sum.summary = card_sum_max.summary_max
+                
+                WHERE card_sum.level = :level
+                
+                ORDER BY card_sum.level, card_sum.id;
+                """,
+                new MapSqlParameterSource()
+                        .addValue("level", level),
+                DataClassRowMapper.newInstance(Card.class));
+    }
 }

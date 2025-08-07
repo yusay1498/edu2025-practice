@@ -1,6 +1,7 @@
 package com.example.demo_jdbc;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,5 +24,10 @@ public class CardRestController {
     @GetMapping("/highPoints2")
     public List<Card> getHighPointsResultSet() {
         return jdbcCardRepository.findHighPointsResultSet();
+    }
+
+    @GetMapping("/highPoints/{level}")
+    public List<Card> getHighPoints(@PathVariable int level) {
+        return jdbcCardRepository.findHighPointByLevel(level);
     }
 }
