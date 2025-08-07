@@ -10,24 +10,24 @@ import java.util.List;
 @RestController
 @RequestMapping("/cards")
 public class CardRestController {
-    private final JdbcCardRepository jdbcCardRepository;
+    private final JdbcCardRepository cardRepository;
 
-    public CardRestController(JdbcCardRepository jdbcCardRepository) {
-        this.jdbcCardRepository = jdbcCardRepository;
-    }
-
-    @GetMapping("/highPoints")
-    public List<Card> getHighPoints() {
-        return jdbcCardRepository.findHighPoints();
-    }
-
-    @GetMapping("/highPoints2")
-    public List<Card> getHighPointsResultSet() {
-        return jdbcCardRepository.findHighPointsResultSet();
+    public CardRestController(JdbcCardRepository cardRepository) {
+        this.cardRepository = cardRepository;
     }
 
     @GetMapping("/highPoints/{level}")
-    public List<Card> getHighPoints(@PathVariable int level) {
-        return jdbcCardRepository.findHighPointByLevel(level);
+    public List<Card> getByHighPoints(
+            @PathVariable("level") int level
+    ) {
+        return cardRepository.findHighPoints(level);
+    }
+
+
+    @GetMapping("/highPoints2/{level}")
+    public List<Card> getByHighPoints2(
+            @PathVariable("level") int level
+    ) {
+        return cardRepository.findHighPoints_ResultSet(level);
     }
 }
