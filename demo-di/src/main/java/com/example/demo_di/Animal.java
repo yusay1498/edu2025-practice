@@ -1,4 +1,4 @@
-package com.example.di_demo;
+package com.example.demo_di;
 
 public interface Animal {
     String call();
