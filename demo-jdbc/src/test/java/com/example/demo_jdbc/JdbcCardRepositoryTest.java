@@ -54,12 +54,12 @@ class JdbcCardRepositoryTest {
         jdbcClient
                 .sql(
                         """
-                            SELECT 
-                                id, name, level, element_id, top, "right", bottom, "left"
-                            FROM 
-                                card
-                            WHERE 
-                                id = :id
+                        SELECT
+                            id, name, level, element_id, top, "right", bottom, "left"
+                        FROM
+                            card
+                        WHERE
+                            id = :id
                         """)
                 .param("id", 2000)
                 .query(DataClassRowMapper.newInstance(Card.class))
