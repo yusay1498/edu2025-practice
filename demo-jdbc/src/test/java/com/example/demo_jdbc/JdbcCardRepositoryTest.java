@@ -23,15 +23,15 @@ class JdbcCardRepositoryTest {
 
     @Sql(statements = {
             """
-            INSERT INTO card(id, name, level, element_id, top, "right", bottom, "left") \
-            VALUES(1000, 'Test Card', 1 , 100, 1, 2, 3, 4)
+            INSERT INTO card(id, name, level, element_id, top, "right", bottom, "left")
+            VALUES(1000, 'Test Card', 1 , 100, 1, 2, 3, 4);
             """
     })
     @Test
     void testFindById() {
-        JdbcCardRepository cardRepo = new JdbcCardRepository(jdbcClient);
+        JdbcCardRepository jdbcCardRepository = new JdbcCardRepository(jdbcClient);
 
-        Card card = cardRepo.findById(1000);
+        Card card = jdbcCardRepository.findById(1000);
 
         Assertions.assertThat(card).isNotNull();
         Assertions.assertThat(card.id()).isEqualTo(1000);
