@@ -62,4 +62,33 @@ class JpaCardRepositoryTest {
         Assertions.assertThat(actual.get(0).getBottom()).isEqualTo(1);
         Assertions.assertThat(actual.get(0).getLeft()).isEqualTo(1);
     }
+
+    @Test
+    public void testSave() {
+        Element testElement = new Element();
+        testElement.setId(250);
+        testElement.setName("Test Save Ele");
+
+        testEntityManager.persist(testElement);
+
+        Card testCard = new Card();
+        testCard.setId(2000);
+        testCard.setName("Test Save Card");
+        testCard.setElement(testElement);
+        testCard.setTop(9);
+        testCard.setRight(8);
+        testCard.setBottom(7);
+        testCard.setLeft(6);
+        Card savedCard = jpaCardRepository.save(testCard);
+
+        Assertions.assertThat(savedCard).isNotNull();
+        Assertions.assertThat(savedCard.getId()).isEqualTo(2000);
+        Assertions.assertThat(savedCard.getName()).isEqualTo("Test Save Card");
+
+        Card actualCard = testEntityManager.find(Card.class, 2000);
+
+        Assertions.assertThat(actualCard).isNotNull();
+        Assertions.assertThat(actualCard.getId()).isEqualTo(2000);
+        Assertions.assertThat(actualCard.getName()).isEqualTo("Test Save Card");
+    }
 }
