@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -38,4 +39,34 @@ class JdbcCardRepositoryTest {
         Assertions.assertThat(card.name()).isEqualTo("Test Card");
     }
 
+    @Test
+    void testSave() {
+        JdbcCardRepository jdbcCardRepository = new JdbcCardRepository(jdbcClient);
+
+        Card card = new Card(2000, "Save Card", 2, 20, 9 ,8, 7, 6);
+
+        Card savedCard = jdbcCardRepository.save(card);
+
+        Assertions.assertThat(savedCard).isNotNull();
+        Assertions.assertThat(savedCard.id()).isEqualTo(2000);
+        Assertions.assertThat(savedCard.name()).isEqualTo("Save Card");
+
+        jdbcClient
+                .sql(
+                        """
+                            SELECT 
+                                id, name, level, element_id, top, "right", bottom, "left"
+                            FROM 
+                                card
+                            WHERE 
+                                id = :id
+                        """)
+                .param("id", 2000)
+                .query(DataClassRowMapper.newInstance(Card.class))
+                .single();
+
+        Assertions.assertThat(savedCard).isNotNull();
+        Assertions.assertThat(savedCard.id()).isEqualTo(2000);
+        Assertions.assertThat(savedCard.name()).isEqualTo("Save Card");
+    }
 }
