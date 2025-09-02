@@ -1,0 +1,37 @@
+# Docker Composeファイルのスキーマバージョン
+# 以前のバージョンのために用意されているだけで意味はありません
+# 任意項目のため、省略しても問題ありません
+version: "3"
+
+# コンテナ定義
+services:
+  # オリジンサーバーコンテナ
+  origin:
+    # Nginxイメージを使用します
+    image: "nginx:latest"
+    # ホストのディレクトリを、コンテナのディレクトリと共有します
+    # ホスト (./origin/html) : コンテナ (/usr/share/nginx/html)
+    volumes:
+      - "./origin/html:/usr/share/nginx/html"
+    # 同じ構成のコンテナを4台起動します
+    deploy:
+      replicas: 4
+
+  # ロードバランサーコンテナ
+  loadbalancer:
+    # Nginxイメージを使用します
+    image: "nginx:latest"
+    # ホストのディレクトリを、コンテナのディレクトリと共有します
+    # ホスト (./loadbalancer/conf.d) : コンテナ (/etc/nginx/templates)
+    volumes:
+      - "./loadbalancer/conf.d:/etc/nginx/templates"
+    # コンテナで使用される環境変数を設定します
+    # 環境変数 PROXY_URL に origin:80 を設定しています
+    # Nginxコンテナでは、この変数が設定テンプレートに渡って展開されます
+    # 設定テンプレートは直前の volumes 要素でホストから共有済みです
+    environment:
+      PROXY_URL: "origin:80"
+    # ホストのポートから、コンテナのポートにアクセス可能にします
+    # ホスト (60080) : コンテナ (80)
+    ports:
+      - "60080:80"
