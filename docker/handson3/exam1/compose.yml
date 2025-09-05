@@ -4,7 +4,7 @@ services:
   origin:
     build: "../../handson2/exam3"
     ports:
-      - 8080:8080
+      - "8080:8080"
 
   loadbalancer:
     image: "nginx:latest"
