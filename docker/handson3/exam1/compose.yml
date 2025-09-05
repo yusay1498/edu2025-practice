@@ -2,11 +2,9 @@ version: "3"
 
 services:
   origin:
-    image: "nginx:latest"
-    volumes:
-      - "./origin/html:/usr/share/nginx/html"
-    deploy:
-      replicas: 4
+    build: "../../handson2/exam3"
+    ports:
+      - 8080:8080
 
   loadbalancer:
     image: "nginx:latest"
@@ -15,4 +13,4 @@ services:
     environment:
       PROXY_URL: "origin:80"
     ports:
-      - "60080:80"
+      - "60000:80"
