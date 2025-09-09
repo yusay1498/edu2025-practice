@@ -8,6 +8,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/attendances")
@@ -53,5 +54,20 @@ public class AttendanceRestController {
         // Createdステータスと新しいリソースのURIを返す
         // リソースが正常に作成されたことを示すために適切なHTTPステータスコードで応答
         return ResponseEntity.created(location).build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<String> putAttendance(
+            @PathVariable String id,
+            // PUT は指定した URI のリソースを完全に置き換える（idempotent）ことを期待されるためRequestParamは使用しない
+            @RequestBody Attendance attendance
+    ) {
+        if (!Objects.equals(id, attendance.id())) {
+            return ResponseEntity.badRequest().body("Request ID and body ID do not match.");
+        }
+
+        attendanceService.recordFinishWork(id);
+
+        return ResponseEntity.ok("Attendance updated successfully.");
     }
 }
