@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface AttendanceRepository {
     List<Attendance> findAll();
     Optional<Attendance> findById(String id);
+    Attendance save(Attendance attendance);
 }
