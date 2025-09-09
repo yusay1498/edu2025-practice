@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class JdbcAttendanceRepository implements AttendanceRepository {
@@ -28,5 +29,22 @@ public class JdbcAttendanceRepository implements AttendanceRepository {
                 """)
                 .query(DataClassRowMapper.newInstance(Attendance.class))
                 .list();
+    }
+
+    public Optional<Attendance> findById(String id) {
+        return jdbcClient.sql("""
+                    SELECT
+                        id,
+                        employee_id,
+                        begin_work,
+                        finish_work
+                    FROM
+                        attendances
+                    WHERE
+                        id = :id
+                """)
+                .param("id", id)
+                .query(DataClassRowMapper.newInstance(Attendance.class))
+                .optional();
     }
 }
