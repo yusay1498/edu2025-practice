@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public class JdbcAttendanceRepository implements AttendanceRepository {
@@ -46,5 +47,48 @@ public class JdbcAttendanceRepository implements AttendanceRepository {
                 .param("id", id)
                 .query(DataClassRowMapper.newInstance(Attendance.class))
                 .optional();
+    }
+
+    public Attendance save(Attendance attendance) {
+        if (attendance.id() == null) {
+            String newId = UUID.randomUUID().toString();
+
+            jdbcClient.sql("""
+                INSERT INTO attendances (id, employee_id, begin_work, finish_work)
+                VALUES (:id, :employee_id, :begin_work, :finish_work)
+                """)
+                    .param("id", newId)
+                    .param("employee_id", attendance.employeeId())
+                    .param("begin_work", attendance.beginWork())
+                    .param("finish_work", attendance.finishWork())
+                    .update();
+
+            return findById(newId).orElseThrow(
+                    () -> new RuntimeException("INSERT operation was unsuccessful"));
+        } else {
+            int updatedRow = jdbcClient.sql("""
+                    UPDATE attendances
+                    SET
+                        begin_work = COALESCE(:beginWork, begin_work),
+                        finish_work = COALESCE(:finishWork, finish_work)
+                    WHERE id = :id
+                """)
+                    .param("beginWork", attendance.beginWork())
+                    .param("finishWork", attendance.finishWork())
+                    .param("id", attendance.id())
+                    .update();
+
+            if (updatedRow == 1) {
+                // 更新が成功した場合はそのままAttendanceオブジェクトを返す
+                return findById(attendance.id()).orElseThrow(
+                        () -> new RuntimeException("UPDATE operation was unsuccessful"));
+            } else if (updatedRow == 0) {
+                // 更新が成功しなかった場合（idが存在しない場合）の処理
+                throw new RuntimeException("Failed to update attendance for ID " + attendance.id());
+            } else {
+                // 更新が成功しなかった場合（複数更新される場合）の処理
+                throw new RuntimeException("Failed to update attendance for multiple updates are performed");
+            }
+        }
     }
 }
