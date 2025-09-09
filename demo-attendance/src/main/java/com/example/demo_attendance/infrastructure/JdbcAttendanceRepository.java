@@ -33,6 +33,7 @@ public class JdbcAttendanceRepository implements AttendanceRepository {
     }
 
     public Optional<Attendance> findById(String id) {
+        // Optionalにして、結果が存在するかどうかの判断をより直感的に行い、コードの可読性と安全性が向上させる
         return jdbcClient.sql("""
                     SELECT
                         id,
@@ -65,9 +66,12 @@ public class JdbcAttendanceRepository implements AttendanceRepository {
                     .param("finish_work", attendance.finishWork())
                     .update();
 
+            // 登録されたことを確認するためfindByIdで取得した値を返す
             return findById(newId).orElseThrow(
                     () -> new RuntimeException("INSERT operation was unsuccessful"));
         } else {
+            // COALESCE文を使用して、指定されたパラメータがNULLでない場合にのみその値でカラムを更新
+            // そうでない場合は、カラムの現在の値を保持
             int updatedRow = jdbcClient.sql("""
                     UPDATE attendances
                     SET

@@ -38,6 +38,23 @@ public class AttendanceService {
                 ));
     }
 
+    public void recordFinishWork(String id) {
+        Optional<Attendance> result = attendanceRepository.findById(id);
+
+        // Optional が空でないことを確認してから値を取得する
+        // そうしないとエラー処理が不適切な時に発生するNoSuchElementExceptionが発生する
+        result.ifPresentOrElse(attendance -> {
+            attendanceRepository.save(new Attendance(
+                    attendance.id(),
+                    attendance.employeeId(),
+                    attendance.beginWork(),
+                    obtainCurrentTime()
+            ));
+        }, () -> {
+            throw new RuntimeException("No recorded attendance found for ID " + id);
+        });
+    }
+
     private LocalDateTime obtainCurrentTime() {
         return LocalDateTime.now(clock).withNano(0);
     }
