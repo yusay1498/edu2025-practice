@@ -50,6 +50,8 @@ public class JdbcAttendanceRepository implements AttendanceRepository {
     }
 
     public Attendance save(Attendance attendance) {
+        // 勤怠idが存在しない（初回登録時）はINSERT
+        // 勤怠idが存在する場合（更新や退勤時刻登録時）はUPDATE
         if (attendance.id() == null) {
             String newId = UUID.randomUUID().toString();
 
