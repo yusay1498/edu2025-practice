@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.context.annotation.Import;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.test.context.DynamicPropertyRegistry;
@@ -122,5 +123,17 @@ class JdbcAttendanceRepositoryTest {
         Assertions.assertThat(savedAttendance.employeeId()).isEqualTo("emp400");
         Assertions.assertThat(savedAttendance.beginWork()).isEqualTo(LocalDateTime.of(2025, 8, 25, 10, 30, 0));
         Assertions.assertThat(savedAttendance.finishWork()).isEqualTo(LocalDateTime.of(2025, 8, 25, 19, 30, 0));
+    }
+
+    @Test
+    void testSaveInvalidData() {
+        JdbcAttendanceRepository jdbcAttendanceRepository = new JdbcAttendanceRepository(jdbcClient);
+
+        // 不正なデータを作成
+        Attendance invalidAttendance = new Attendance(null, null, LocalDateTime.now(), null);
+
+        // 例外が発生することを確認する
+        Assertions.assertThatThrownBy(() -> jdbcAttendanceRepository.save(invalidAttendance))
+                .isInstanceOf(DataIntegrityViolationException.class);  // 適切な例外クラスを指定
     }
 }
