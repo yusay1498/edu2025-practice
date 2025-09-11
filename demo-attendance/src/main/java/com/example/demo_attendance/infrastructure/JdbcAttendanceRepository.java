@@ -75,7 +75,7 @@ public class JdbcAttendanceRepository implements AttendanceRepository {
             int updatedRow = jdbcClient.sql("""
                     UPDATE attendances
                     SET
-                        begin_work = COALESCE(:beginWork, begin_work),
+                        begin_work  = COALESCE(:beginWork, begin_work),
                         finish_work = COALESCE(:finishWork, finish_work)
                     WHERE id = :id
                 """)
