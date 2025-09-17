@@ -9,7 +9,7 @@ services:
       ZOOKEEPER_SYNC_LIMIT: 2
 
   broker-1:
-    image: confluentinc/cp-kafka:latest
+    image: confluentinc/cp-kafka:7.3.0
     environment:
       KAFKA_BROKER_ID: 100
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
@@ -26,7 +26,7 @@ services:
       - zookeeper
 
   broker-2:
-    image: confluentinc/cp-kafka:latest
+    image: confluentinc/cp-kafka:7.3.0
     environment:
       KAFKA_BROKER_ID: 200
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
@@ -43,7 +43,7 @@ services:
       - zookeeper
 
   broker-3:
-    image: confluentinc/cp-kafka:latest
+    image: confluentinc/cp-kafka:7.3.0
     environment:
       KAFKA_BROKER_ID: 300
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
