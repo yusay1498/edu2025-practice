@@ -55,6 +55,10 @@ public class AttendanceService {
         });
     }
 
+    public void deleteById(String id) {
+        attendanceRepository.deleteById(id);
+    }
+
     private LocalDateTime obtainCurrentTime() {
         return LocalDateTime.now(clock).withNano(0);
     }
