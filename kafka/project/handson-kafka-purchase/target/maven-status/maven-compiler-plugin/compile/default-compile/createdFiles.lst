@@ -1,0 +1,5 @@
+jp/co/isetanmitsukoshi/handson/kafka/purchase/PurchaseProducerRestController.class
+jp/co/isetanmitsukoshi/handson/kafka/purchase/KafkaHandsonApplication.class
+jp/co/isetanmitsukoshi/handson/kafka/purchase/CalculateApplicationService.class
+jp/co/isetanmitsukoshi/handson/kafka/purchase/Purchase.class
+jp/co/isetanmitsukoshi/handson/kafka/purchase/PurchaseConsumer.class

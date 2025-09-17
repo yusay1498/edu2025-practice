@@ -1,0 +1,101 @@
+services:
+  chat-viewer:
+    build:
+      context: .
+      args:
+        JAR: ./target/*.jar
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_KAFKA_BOOTSTRAPSERVERS: kafka-broker-1:9092,kafka-broker-2:9092,kafka-broker-3:9092
+      SPRING_KAFKA_TEMPLATE_DEFAULTTOPIC: chat-message
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_SERVER_ID: 1
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafka-broker-1:
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-broker-1:9092
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
+
+  kafka-broker-2:
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 2
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-broker-2:9092
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
+
+  kafka-broker-3:
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 3
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-broker-3:9092
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
+
+  kafka-init-script:
+    image: confluentinc/cp-kafka
+    depends_on:
+      - kafka-broker-1
+      - kafka-broker-2
+      - kafka-broker-3
+    entrypoint: [ '/bin/sh', '-c' ]
+    command: |
+      '
+      # blocks until kafka is reachable
+      kafka-topics --bootstrap-server kafka-broker-1:9092,kafka-broker-2:9092,kafka-broker-3:9092 --list
+      
+      echo -e "Creating kafka topics for \"chat-message\""
+      kafka-topics --bootstrap-server kafka-broker-1:9092,kafka-broker-2:9092,kafka-broker-3:9092 --create --if-not-exists --topic chat-message --replication-factor 3 --partitions 3
+      
+      # 伊勢丹 + (越後屋->三越) + 岩田屋（九州） + 丸井今井（北海道）
+      name_array=("iseya-tanji" "mitsui-takatoshi" "imai-toshichi")
+      for i in {1..3} ; do
+        echo room-$${i}
+        for j in {1..10} ; do
+          id=$${j}
+          room=room-$${i}
+          username=$${name_array[$$(( j % $${#name_array[@]} - 1 ))]}
+          message=msg-$${j}
+
+          ########################################      
+          ##  Keyを設定する
+          ########################################      
+          key=$${username}
+
+          echo send message for $${key}@{\"id\": \"$${id}\", \"room\": \"$${room}\", \"username\": \"$${username}\", \"message\": \"$${message}\"}
+          echo $${key}@{\"id\": \"$${j}\", \"room\": \"room-$${i}\", \"username\": \"$${username}\", \"message\": \"msg-$${j}\"} | kafka-console-producer --topic chat-message --bootstrap-server kafka-broker-1:9092,kafka-broker-2:9092,kafka-broker-3:9092 --request-required-acks -1 --property parse.key=true --property key.separator='@'
+        done
+      done
+      
+      echo -e "Successfully created the following topics:"
+      kafka-topics --bootstrap-server kafka-broker-1:9092,kafka-broker-2:9092,kafka-broker-3:9092 --list
+      '
+
+  akhq:
+    image: tchiotludo/akhq
+    environment:
+      AKHQ_CONFIGURATION: '{"akhq": {"connections": {"docker-kafka-cluster": {"schema-registry": {"url": "http://schema-registry:8085"}, "properties": {"bootstrap.servers": "kafka-broker-1:9092,kafka-broker-2:9092,kafka-broker-3:9092"}, "connect": [{"url": "http://connect:8083", "name": "connect"}]}}}}'
+    ports:
+      - 18080:8080
+    depends_on:
+      - kafka-broker-1
+      - kafka-broker-2
+      - kafka-broker-3

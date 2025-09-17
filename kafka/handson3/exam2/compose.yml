@@ -1,0 +1,73 @@
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.3.0
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  broker:
+    image: confluentinc/cp-kafka:7.3.0
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_ADVERTISED_LISTENERS: LISTENER_DOCKER_INTERNAL://broker:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LISTENER_DOCKER_INTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_DOCKER_INTERNAL
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+
+  init-kafka:
+    image: confluentinc/cp-kafka
+    volumes:
+      - ./:/tmp/data/
+    depends_on:
+      - broker
+    entrypoint: [ '/bin/sh', '-c' ]
+    command: |
+      "      
+      # blocks until kafka is reachable
+      kafka-topics --bootstrap-server broker:9092 --list
+      
+      echo -e 'Creating kafka topics'
+      kafka-topics --bootstrap-server broker:9092 --create --if-not-exists --topic purchase-isetan
+      kafka-topics --bootstrap-server broker:9092 --create --if-not-exists --topic purchase-mitsukoshi
+      
+      kafka-console-producer --topic purchase-isetan --bootstrap-server broker:9092 --property parse.key=true --property key.separator='@' < /tmp/data/purchase-isetan.data
+      kafka-console-producer --topic purchase-mitsukoshi --bootstrap-server broker:9092 --property parse.key=true --property key.separator='@' < /tmp/data/purchase-mitsukoshi.data
+
+      echo -e 'Successfully created the following topics:'
+      kafka-topics --bootstrap-server broker:9092 --list
+      "
+
+  application:
+    build: .
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: "broker:9092"
+      SPRING_KAFKA_TEMPLATE_DEFAULT_TOPIC: purchase-mitsukoshi
+      SPRING_KAFKA_CONSUMER_GROUP_ID: handson-kafka-purchase
+    ports:
+      - 8080:8080
+    depends_on:
+      - broker
+
+  akhq:
+    image: tchiotludo/akhq
+    environment:
+      AKHQ_CONFIGURATION: |
+        akhq:
+          connections:
+            docker-kafka-cluster:
+              properties:
+                bootstrap.servers: "broker:9092"
+              schema-registry:
+                url: "http://schema-registry:8085"
+              connect:
+                - name: "connect"
+                  url: "http://connect:8083"
+    ports:
+      - 18080:8080
+    depends_on:
+      - broker
