@@ -97,4 +97,13 @@ public class JdbcAttendanceRepository implements AttendanceRepository {
             }
         }
     }
+
+    public void deleteById(String id) {
+        jdbcClient.sql("""
+                DELETE FROM attendance
+                WHERE id = :id
+                """)
+                .param("id", id)
+                .update();
+    }
 }
