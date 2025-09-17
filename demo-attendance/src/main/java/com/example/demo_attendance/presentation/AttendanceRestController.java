@@ -70,4 +70,14 @@ public class AttendanceRestController {
 
         return ResponseEntity.ok("Attendance updated successfully.");
     }
+
+    // DELETEはスコープ外だが、実装者が多いため急遽追加
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteAttendance(
+            @PathVariable String id
+    ) {
+        attendanceService.deleteById(id);
+        // ResponseEntity.noContent().build()は、HTTP 204 No Contentレスポンスを作成
+        return ResponseEntity.noContent().build();
+    }
 }
