@@ -49,7 +49,7 @@ services:
         JAR: ./*.jar
     environment:
       SPRING_KAFKA_BOOTSTRAP_SERVERS: "broker:9092"
-      SPRING_KAFKA_TEMPLATE_DEFAULT_TOPIC: purchase-mitsukoshi
+      SPRING_KAFKA_TEMPLATE_DEFAULT_TOPIC: purchase-isetan
       SPRING_KAFKA_CONSUMER_GROUP_ID: handson-kafka-purchase
     ports:
       - 8080:8080
