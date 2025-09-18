@@ -27,6 +27,12 @@ public class JdbcCustomerPointRepository implements CustomerPointRepository {
     }
 
     public Optional<CustomerPoint> findByCustomerId(String customerId) {
-        return null;
+        return jdbcClient.sql("""
+                        SELECT customer_id, point FROM customer_points
+                        WHERE customer_id = :customerId
+                        """)
+                .param("customerId", customerId)
+                .query(DataClassRowMapper.newInstance(CustomerPoint.class))
+                .optional();
     }
 }
