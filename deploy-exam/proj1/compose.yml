@@ -1,4 +1,18 @@
 services:
+  points-api:
+    build:
+      context: ./points-handler
+      args:
+        JAR: ./target/*.jar
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/purchase
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    depends_on:
+      - postgres
+
   postgres:
     image: postgres:latest
     ports:
