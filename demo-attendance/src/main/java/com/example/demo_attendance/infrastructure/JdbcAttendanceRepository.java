@@ -100,7 +100,7 @@ public class JdbcAttendanceRepository implements AttendanceRepository {
 
     public void deleteById(String id) {
         jdbcClient.sql("""
-                DELETE FROM attendance
+                DELETE FROM attendances
                 WHERE id = :id
                 """)
                 .param("id", id)
