@@ -1,0 +1,50 @@
+html {
+  background-color: #fff;
+  color: #000000;
+  font-family: "游ゴシック体",YuGothic,"游ゴシック","Yu Gothic","メイリオ",Meiryo,"ヒラギノ角ゴ Pro W3","Hiragino Kaku Gothic ProN",sans-serif;
+}
+
+.loading {
+  border: 8px solid rgba(0, 0, 0, 0.1);
+  border-top: 8px solid #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin: auto;
+}
+
+.not-found {
+  width: 300px;
+  margin: 0 auto;
+  padding: 10px;
+  text-align: center;
+}
+
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg)
+  }
+}
+
+@mixin pc {
+  @media screen and (min-width: 960px) {
+    @content;
+  }
+}
+
+@mixin tab {
+  @media screen and (max-width: 959px) {
+    @content;
+  }
+}
+
+@mixin sp {
+  @media screen and (max-width: 600px) {
+    @content;
+  }
+}

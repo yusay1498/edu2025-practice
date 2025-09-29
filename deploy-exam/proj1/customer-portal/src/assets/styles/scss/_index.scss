@@ -1,0 +1,4 @@
+//resetでデフォルトのcssの挙動を破壊
+@forward "./reset";
+//このパッケージ全体に適用させる共通のstyle
+@forward "./lib";

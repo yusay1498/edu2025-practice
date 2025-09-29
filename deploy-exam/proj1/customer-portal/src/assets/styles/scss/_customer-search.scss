@@ -1,0 +1,26 @@
+.select-id {
+  width: 300px;
+  margin: 0 auto;
+  padding: 10px;
+  display: flex;
+}
+
+.custom-select {
+  width: 300px;
+  margin: 20px auto 0;
+
+  &__option {
+    padding: 10px;
+
+    &:hover {
+      background-color: #e0e0e0;
+    }
+  }
+
+  &__menu {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+  }
+}

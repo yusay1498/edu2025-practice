@@ -17,7 +17,6 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        // /salesHistories以外のエンドポイントも含め、全てのエンドポイントにCORSを設定
         registry.addMapping("/**")
                 .allowedOrigins(corsProperties.getAllowedOrigins().toArray(String[]::new))  // 許可するオリジン
                 .allowedMethods("GET", "POST", "PUT", "DELETE") // 許可するメソッド

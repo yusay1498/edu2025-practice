@@ -4,3 +4,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/purchase
     username: postgres
+
+app:
+  cors:
+    allowed-origins:

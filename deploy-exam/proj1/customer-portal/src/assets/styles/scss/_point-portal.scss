@@ -1,0 +1,136 @@
+@use "./index" as index;
+
+.customer {
+  width: 600px;
+  height: 350px;
+  margin: 15px auto;
+  color: #fff;
+  border-radius: 8px;
+  background-color: #429458;
+  white-space: nowrap;
+  font-weight: bold;
+  padding: 30px 20px;
+  @include index.sp {
+    width: 300px;
+    height: 175px;
+    padding: 15px 10px;
+  }
+
+  &_id {
+    margin-top: 45px;
+    font-size: 30px;
+    letter-spacing: 0.05em;
+    @include index.sp {
+      margin-top: 22px;
+      font-size: 15px;
+    }
+  }
+
+  &_point {
+    width: 100%;
+    height: 35%;
+    background-color: #fff;
+    color: #595959;
+    margin-top: 30px;
+    font-size: 28px;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    @include index.sp {
+      font-size: 14px;
+      padding: 7px;
+      margin-top: 15px;
+    }
+
+    &_num {
+      display: flex;
+
+      &_main {
+        font-size: 50px;
+        @include index.sp {
+          font-size: 28px;
+        }
+      }
+
+      &_unit {
+        font-size: 15px;
+        margin: auto 8px 6px;
+        @include index.sp {
+          font-size: 8px;
+          margin: auto 4px 4px;
+        }
+      }
+    }
+  }
+}
+
+.mitsukoshi {
+  width: 46.6%;
+  text-align: center;
+  background: linear-gradient(90deg, #fff, #fff, #fff, #fff, #999, #4d4d4d, #999, #fff, #fff, #fff, #fff);
+  //グラデーションのサイズ
+  background-size: 200%;
+  //アニメーションの設定
+  animation: color-flow 2s linear infinite;
+  //Safari用
+  -webkit-background-clip: text;
+  //テキストにグラデーションを適用
+  background-clip: text;
+  //テキストの色を透明にする
+  color: transparent;
+  letter-spacing: -0.15em;
+  @include index.sp {
+    width: 47%;
+    letter-spacing: -0.1em;
+  }
+
+  &_name {
+    width: 100%;
+    height: 36px;
+    background-image: url("../../images/header_logo.svg");
+    background-size: contain; // 画像を全体にカバー
+    background-repeat: no-repeat; // 繰り返しを無効化
+    position: relative;
+
+    // グラデーションを適用
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, #fff, #fff, #fff, #fff, #999, #4d4d4d, #999, #fff, #fff, #fff, #fff);
+      background-size: 200%;
+      animation: color-flow 2s linear infinite;
+      -webkit-mask-image: url("../../images/header_logo.svg");
+      -webkit-mask-size: contain; // 画像に合わせる
+      -webkit-mask-repeat: no-repeat;
+      z-index: 1; // 画像の上に重ねる
+    }
+
+    @include index.sp {
+      height: 16px;
+    }
+  }
+
+  &_member {
+    font-size: 22px;
+    margin-top: 5px;
+    @include index.sp {
+      font-size: 10px;
+    }
+  }
+}
+
+@keyframes color-flow {
+  //開始位置
+  0% {
+    background-position: 100% 0%;
+  }
+  //終了位置
+  100% {
+    background-position: -100% 0%;
+  }
+}

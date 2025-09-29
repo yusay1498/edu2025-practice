@@ -1,0 +1,8 @@
+//_をつけて直接コンパイルされないように指定
+//jsに読み込ませるのはこのmain.scssのみ
+
+//各役割ごとのstyle
+@use "scss/index";
+@use "scss/header";
+@use "scss/point-portal";
+@use "scss/customer-search";
