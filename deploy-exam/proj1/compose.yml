@@ -76,13 +76,13 @@ services:
     depends_on:
       - kafka
 
-#  nginx:
-#    build:
-#      context: ./customer-portal
-#      dockerfile: Dockerfile
-#    ports:
-#      - "3000:80"  # Nginxがホストするポート
-#    volumes:
-#      - ./customer-portal/build:/usr/share/nginx/html  # Nginxのデフォルトのhtmlディレクトリにマウント
-#    depends_on:
-#      - points-api
+  nginx:
+    build:
+      context: ./customer-portal
+      dockerfile: Dockerfile
+    ports:
+      - "5173:80"  # Nginxがホストするポート
+    volumes:
+      - ./customer-portal/dist:/usr/share/nginx/html  # Nginxのデフォルトのhtmlディレクトリにマウント
+    depends_on:
+      - points-api

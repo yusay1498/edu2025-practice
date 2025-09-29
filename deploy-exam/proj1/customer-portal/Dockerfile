@@ -2,7 +2,7 @@
 FROM nginx:alpine
 
 # ビルド済みの静的ファイルをNginxの公開ディレクトリにコピー
-COPY ./build /usr/share/nginx/html
+COPY ./dist /usr/share/nginx/html
 
 # Nginxの設定ファイルをコピー
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
