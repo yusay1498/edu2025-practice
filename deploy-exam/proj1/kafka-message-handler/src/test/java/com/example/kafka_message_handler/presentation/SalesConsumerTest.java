@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.core.KafkaOperations;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -41,7 +41,7 @@ class SalesConsumerTest {
     private CustomerPointService customerPointService;
 
     @Autowired
-    KafkaTemplate<String, Sales> kafkaTemplate;
+    KafkaOperations<String, Sales> kafkaOperations;
 
     @Test
     public void testConsumeKafkaMessage() throws Exception {
@@ -71,7 +71,7 @@ class SalesConsumerTest {
         );
 
         // Kafkaトピックにメッセージを送信
-        kafkaTemplate.sendDefault(sales);
+        kafkaOperations.sendDefault(sales);
 
         if (!latch.await(10_000L, TimeUnit.MILLISECONDS)) {
             /*
