@@ -1,5 +1,6 @@
 package com.example.kafka_message_handler;
 
+import com.example.kafka_message_handler.config.TestcontainersConfiguration;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
