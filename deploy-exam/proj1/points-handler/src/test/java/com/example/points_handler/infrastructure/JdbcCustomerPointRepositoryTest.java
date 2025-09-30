@@ -61,4 +61,5 @@ public class JdbcCustomerPointRepositoryTest {
         Assertions.assertThat(customerPoint.get().customerId()).isEqualTo("testId1");
         Assertions.assertThat(customerPoint.get().point()).isEqualTo(200);
     }
+
 }
