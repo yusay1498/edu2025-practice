@@ -58,7 +58,7 @@ curl -X GET http://localhost:8080/points/testId
 ### 一括処理
 
 ```bash
-cd customer_portal/
+cd customer-portal/
 
 npm i
 
