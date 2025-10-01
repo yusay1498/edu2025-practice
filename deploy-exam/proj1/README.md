@@ -70,5 +70,5 @@ cd ../
 
 docker compose up --build -d
 
-echo "Check here: http://localhost:3000/"
+echo "Check here: http://localhost:5173/"
 ```
