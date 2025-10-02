@@ -1,6 +1,5 @@
 package com.example.point.consumer.presentation;
 
-import com.example.point.consumer.SalesConsumer;
 import com.example.point.consumer.application.CustomerPointService;
 import com.example.point.consumer.config.TestcontainersConfiguration;
 import com.example.point.consumer.domain.entity.Customer;

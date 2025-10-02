@@ -1,4 +1,4 @@
-package com.example.point.consumer;
+package com.example.point.consumer.presentation;
 
 import com.example.point.consumer.application.CustomerPointService;
 import com.example.point.consumer.domain.entity.Sales;
