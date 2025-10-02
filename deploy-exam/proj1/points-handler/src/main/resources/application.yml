@@ -1,9 +1,6 @@
 spring:
   application:
     name: points-handler
-  datasource:
-    url: jdbc:postgresql://localhost:5432/purchase
-    username: postgres
 
 app:
   cors:
