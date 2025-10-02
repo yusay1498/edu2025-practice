@@ -28,6 +28,7 @@ services:
       SPRING_KAFKA_PROPERTIES_SASL_CLIENT_CALLBACK_HANDLER_CLASS:
     depends_on:
       - postgres
+      - kafka
 
   postgres:
     image: postgres:latest
@@ -48,6 +49,9 @@ services:
       SPRING_KAFKA_BOOTSTRAPSERVERS: kafka:9092
       SPRING_KAFKA_TEMPLATE_DEFAULTTOPIC: purchases
       APP_THREAD_NOISESPERSEC: 500
+    depends_on:
+      - kafka
+      - kafka-consumer
 
   kafka:
     image: apache/kafka-native
