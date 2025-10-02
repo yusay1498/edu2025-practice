@@ -22,7 +22,7 @@ public class CustomerPointService {
                     customerPointRepository.save(
                             new CustomerPoint(
                                     customerPoint.customerId(),
-                                    customerPoint.point() + sales.givenPoint() - sales.paidPoint()
+                                    customerPoint.currentPoints() + sales.givenPoint() - sales.paidPoint()
                             )
                     );
                 }, () -> {

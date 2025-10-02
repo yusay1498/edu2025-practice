@@ -30,7 +30,7 @@ public class JdbcCustomerPointRepositoryTest {
     @Test
     @Sql(statements = {
             """
-            INSERT INTO customer_points (customer_id, point)
+            INSERT INTO customer_points (customer_id, current_points)
             VALUES ('testId1', 200);
             """
     })
@@ -42,13 +42,13 @@ public class JdbcCustomerPointRepositoryTest {
         Assertions.assertThat(customerPoints).isNotEmpty();
         Assertions.assertThat(customerPoints).hasSize(1);
         Assertions.assertThat(customerPoints.get(0).customerId()).isEqualTo("testId1");
-        Assertions.assertThat(customerPoints.get(0).point()).isEqualTo(200);
+        Assertions.assertThat(customerPoints.get(0).currentPoints()).isEqualTo(200);
     }
 
     @Test
     @Sql(statements = {
             """
-            INSERT INTO customer_points (customer_id, point)
+            INSERT INTO customer_points (customer_id, current_points)
             VALUES ('testId1', 200);
             """
     })
@@ -59,7 +59,7 @@ public class JdbcCustomerPointRepositoryTest {
 
         Assertions.assertThat(customerPoint).isNotEmpty();
         Assertions.assertThat(customerPoint.get().customerId()).isEqualTo("testId1");
-        Assertions.assertThat(customerPoint.get().point()).isEqualTo(200);
+        Assertions.assertThat(customerPoint.get().currentPoints()).isEqualTo(200);
     }
 
 }

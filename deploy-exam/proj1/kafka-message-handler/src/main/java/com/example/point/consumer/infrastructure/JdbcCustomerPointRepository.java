@@ -18,7 +18,7 @@ public class JdbcCustomerPointRepository implements CustomerPointRepository {
 
     public Optional<CustomerPoint> findByCustomerId(String customerId) {
         return jdbcClient.sql("""
-                        SELECT customer_id, point FROM customer_points
+                        SELECT customer_id, current_points FROM customer_points
                         WHERE customer_id = :customerId
                         """)
                 .param("customerId", customerId)
@@ -30,11 +30,11 @@ public class JdbcCustomerPointRepository implements CustomerPointRepository {
         //受け取った顧客idがデータベースに存在していない場合、INSERT でid とポイントを新規保存
         if (findByCustomerId(customerPoint.customerId()).isEmpty()) {
             jdbcClient.sql("""
-                            INSERT INTO customer_points (customer_id, point)
-                            VALUES (:customerId, :point)
+                            INSERT INTO customer_points (customer_id, current_points)
+                            VALUES (:customerId, :currentPoints)
                             """)
                     .param("customerId", customerPoint.customerId())
-                    .param("point", customerPoint.point())
+                    .param("currentPoints", customerPoint.currentPoints())
                     .update();
             // 保存後にデータを再取得
             return findByCustomerId(customerPoint.customerId())
@@ -44,11 +44,11 @@ public class JdbcCustomerPointRepository implements CustomerPointRepository {
         } else {//顧客id がデータベースに存在する場合、UPDATE でポイントを更新
             int updateRows = jdbcClient.sql("""
                                   UPDATE customer_points
-                                  SET point = :point
+                                  SET current_points = :currentPoints
                                   WHERE customer_id = :customerId
                             """)
                     .param("customerId", customerPoint.customerId())
-                    .param("point", customerPoint.point())
+                    .param("currentPoints", customerPoint.currentPoints())
                     .update();
             if (updateRows == 1) {
                 return findByCustomerId(customerPoint.customerId()).orElseThrow(

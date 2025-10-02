@@ -1,6 +1,5 @@
 package com.example.point.consumer.application;
 
-import com.example.point.consumer.application.CustomerPointService;
 import com.example.point.consumer.domain.entity.Customer;
 import com.example.point.consumer.domain.entity.CustomerPoint;
 import com.example.point.consumer.domain.entity.Sales;
@@ -45,7 +44,7 @@ class CustomerPointServiceTest {
 
         Mockito.verify(mockedRepo, times(1)).save(Mockito.any(CustomerPoint.class));
         Mockito.verify(mockedRepo, times(1)).findByCustomerId("1");
-        Mockito.verify(mockedRepo).save(Mockito.argThat(customerPoint -> customerPoint.point() == 200));
+        Mockito.verify(mockedRepo).save(Mockito.argThat(customerPoint -> customerPoint.currentPoints() == 200));
     }
 
     @Test
@@ -76,7 +75,7 @@ class CustomerPointServiceTest {
 
         Mockito.verify(mockedRepo, times(1)).save(Mockito.any(CustomerPoint.class));
         Mockito.verify(mockedRepo, times(1)).findByCustomerId("1");
-        Mockito.verify(mockedRepo).save(Mockito.argThat(customerPoint -> customerPoint.point() == 100));
+        Mockito.verify(mockedRepo).save(Mockito.argThat(customerPoint -> customerPoint.currentPoints() == 100));
     }
 
 }

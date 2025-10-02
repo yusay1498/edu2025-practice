@@ -19,7 +19,7 @@ public class JdbcCustomerPointRepository implements CustomerPointRepository {
 
     public List<CustomerPoint>  findAll() {
         return jdbcClient.sql("""
-                        SELECT customer_id, point FROM customer_points
+                        SELECT customer_id, current_points FROM customer_points
                         ORDER BY customer_id ASC
                         """)
                 .query(DataClassRowMapper.newInstance(CustomerPoint.class))
@@ -28,7 +28,7 @@ public class JdbcCustomerPointRepository implements CustomerPointRepository {
 
     public Optional<CustomerPoint> findByCustomerId(String customerId) {
         return jdbcClient.sql("""
-                        SELECT customer_id, point FROM customer_points
+                        SELECT customer_id, current_points FROM customer_points
                         WHERE customer_id = :customerId
                         """)
                 .param("customerId", customerId)

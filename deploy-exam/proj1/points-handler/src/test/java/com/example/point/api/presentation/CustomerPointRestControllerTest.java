@@ -53,7 +53,7 @@ public class CustomerPointRestControllerTest {
     @ParameterizedTest
     @Sql(statements = {
             """
-            INSERT INTO customer_points (customer_id, point)
+            INSERT INTO customer_points (customer_id, current_points)
             VALUES ('testId1', 100);
             """
     })

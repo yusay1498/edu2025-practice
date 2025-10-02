@@ -1,6 +1,5 @@
 package com.example.point.api.application;
 
-import com.example.point.api.application.CustomerPointService;
 import com.example.point.api.domain.entity.CustomerPoint;
 import com.example.point.api.domain.repository.CustomerPointRepository;
 import org.assertj.core.api.Assertions;
@@ -74,7 +73,7 @@ public class CustomerPointServiceTest {
 
         actual.ifPresentOrElse(customerPoint -> {
                     Assertions.assertThat(customerPoint.customerId()).isEqualTo(testCustomerPoint.customerId());
-                    Assertions.assertThat(customerPoint.point()).isEqualTo(testCustomerPoint.point());
+                    Assertions.assertThat(customerPoint.currentPoints()).isEqualTo(testCustomerPoint.currentPoints());
                 }, () -> {
                     Assertions.fail("Required not null");
                 }

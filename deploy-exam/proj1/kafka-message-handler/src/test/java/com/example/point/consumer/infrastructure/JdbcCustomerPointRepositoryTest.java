@@ -29,7 +29,7 @@ class JdbcCustomerPointRepositoryTest {
     @Test
     @Sql(statements = {
             """
-            INSERT INTO customer_points (customer_id, point)
+            INSERT INTO customer_points (customer_id, current_points)
             VALUES ('testId1', 200);
             """
     })
@@ -40,7 +40,7 @@ class JdbcCustomerPointRepositoryTest {
 
         Assertions.assertThat(customerPoint).isNotEmpty();
         Assertions.assertThat(customerPoint.get().customerId()).isEqualTo("testId1");
-        Assertions.assertThat(customerPoint.get().point()).isEqualTo(200);
+        Assertions.assertThat(customerPoint.get().currentPoints()).isEqualTo(200);
     }
 
     @Test
@@ -51,10 +51,10 @@ class JdbcCustomerPointRepositoryTest {
         CustomerPoint savedCustomerPoint = jdbcCustomerPointRepository.save(newCustomerPoint);
         Assertions.assertThat(savedCustomerPoint).isNotNull();
         Assertions.assertThat(savedCustomerPoint.customerId()).isEqualTo("testId2");
-        Assertions.assertThat(savedCustomerPoint.point()).isEqualTo(150);
+        Assertions.assertThat(savedCustomerPoint.currentPoints()).isEqualTo(150);
 
         Optional<CustomerPoint> insertedCustomerPoint = jdbcClient.sql("""
-                                SELECT customer_id, point FROM customer_points
+                                SELECT customer_id, current_points FROM customer_points
                                 WHERE customer_id = :customerId
                         """)
                 .param("customerId", newCustomerPoint.customerId())
@@ -63,13 +63,13 @@ class JdbcCustomerPointRepositoryTest {
 
         Assertions.assertThat(insertedCustomerPoint).isNotEmpty();
         Assertions.assertThat(insertedCustomerPoint.get().customerId()).isEqualTo("testId2");
-        Assertions.assertThat(insertedCustomerPoint.get().point()).isEqualTo(150);
+        Assertions.assertThat(insertedCustomerPoint.get().currentPoints()).isEqualTo(150);
     }
 
     @Test
     @Sql(statements = {
             """
-            INSERT INTO customer_points (customer_id, point)
+            INSERT INTO customer_points (customer_id, current_points)
             VALUES ('testId3', 100);
             """
     })
@@ -80,10 +80,10 @@ class JdbcCustomerPointRepositoryTest {
         CustomerPoint savedCustomerPoint = jdbcCustomerPointRepository.save(existingCustomerPoint);
         Assertions.assertThat(savedCustomerPoint).isNotNull();
         Assertions.assertThat(savedCustomerPoint.customerId()).isEqualTo("testId3");
-        Assertions.assertThat(savedCustomerPoint.point()).isEqualTo(250);
+        Assertions.assertThat(savedCustomerPoint.currentPoints()).isEqualTo(250);
 
         Optional<CustomerPoint> updatedCustomerPoint = jdbcClient.sql("""
-                                SELECT customer_id, point FROM customer_points
+                                SELECT customer_id, current_points FROM customer_points
                                 WHERE customer_id = :customerId
                         """)
                 .param("customerId", existingCustomerPoint.customerId())
@@ -92,7 +92,7 @@ class JdbcCustomerPointRepositoryTest {
 
         Assertions.assertThat(updatedCustomerPoint).isNotEmpty();
         Assertions.assertThat(updatedCustomerPoint.get().customerId()).isEqualTo("testId3");
-        Assertions.assertThat(updatedCustomerPoint.get().point()).isEqualTo(250);
+        Assertions.assertThat(updatedCustomerPoint.get().currentPoints()).isEqualTo(250);
     }
 
 }
