@@ -69,31 +69,11 @@ public class CustomerPointServiceTest {
 
         CustomerPointService customerPointService = new CustomerPointService(mockedRepo);
 
-        Optional<CustomerPoint> actual = customerPointService.lookupCustomerPointById("testId1");
+        CustomerPoint actual = customerPointService.lookupCustomerPointById("testId1");
 
-        actual.ifPresentOrElse(customerPoint -> {
-                    Assertions.assertThat(customerPoint.customerId()).isEqualTo(testCustomerPoint.customerId());
-                    Assertions.assertThat(customerPoint.currentPoints()).isEqualTo(testCustomerPoint.currentPoints());
-                }, () -> {
-                    Assertions.fail("Required not null");
-                }
-        );
-    }
-
-    @Test
-    void testViewCustomerPointByCustomerId_Empty() {
-        CustomerPointRepository mockedRepo = Mockito.mock(CustomerPointRepository.class);
-
-        Mockito.doReturn(Optional.empty()).when(mockedRepo).findByCustomerId("testId1");
-
-        CustomerPointService customerPointService = new CustomerPointService(mockedRepo);
-
-        Optional<CustomerPoint> actual = customerPointService.lookupCustomerPointById("testId1");
-
-        Assertions.assertThat(actual).isNotNull();
-        Assertions.assertThat(actual).isEmpty();
+        Assertions.assertThat(actual.customerId()).isEqualTo(testCustomerPoint.customerId());
+        Assertions.assertThat(actual.currentPoints()).isEqualTo(testCustomerPoint.currentPoints());
 
         Mockito.verify(mockedRepo, Mockito.times(1)).findByCustomerId("testId1");
     }
-
 }

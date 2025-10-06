@@ -28,8 +28,6 @@ public class CustomerPointRestController {
     public ResponseEntity<CustomerPoint> getPointByCustomerId(
             @PathVariable String customerId
     ) {
-        return customerPointService.lookupCustomerPointById(customerId)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(customerPointService.lookupCustomerPointById(customerId));
     }
 }
