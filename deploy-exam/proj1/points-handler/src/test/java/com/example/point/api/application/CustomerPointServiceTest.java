@@ -69,7 +69,7 @@ public class CustomerPointServiceTest {
 
         CustomerPointService customerPointService = new CustomerPointService(mockedRepo);
 
-        Optional<CustomerPoint> actual = customerPointService.viewCustomerPointById("testId1");
+        Optional<CustomerPoint> actual = customerPointService.lookupCustomerPointById("testId1");
 
         actual.ifPresentOrElse(customerPoint -> {
                     Assertions.assertThat(customerPoint.customerId()).isEqualTo(testCustomerPoint.customerId());
@@ -88,7 +88,7 @@ public class CustomerPointServiceTest {
 
         CustomerPointService customerPointService = new CustomerPointService(mockedRepo);
 
-        Optional<CustomerPoint> actual = customerPointService.viewCustomerPointById("testId1");
+        Optional<CustomerPoint> actual = customerPointService.lookupCustomerPointById("testId1");
 
         Assertions.assertThat(actual).isNotNull();
         Assertions.assertThat(actual).isEmpty();

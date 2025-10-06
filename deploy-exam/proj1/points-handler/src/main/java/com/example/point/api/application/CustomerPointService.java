@@ -21,7 +21,7 @@ public class CustomerPointService {
         return customerPointRepository.findAll();
     }
 
-    public Optional<CustomerPoint> viewCustomerPointById(String customerId) {
+    public Optional<CustomerPoint> lookupCustomerPointById(String customerId) {
         return customerPointRepository.findByCustomerId(customerId);
     }
 }
