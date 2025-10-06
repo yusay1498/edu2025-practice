@@ -17,7 +17,7 @@ public class CustomerPointService {
         this.customerPointRepository = customerPointRepository;
     }
 
-    public List<CustomerPoint> viewAllCustomerPoints() {
+    public List<CustomerPoint> listCustomerPoints() {
         return customerPointRepository.findAll();
     }
 

@@ -21,7 +21,7 @@ public class CustomerPointRestController {
 
     @GetMapping
     public List<CustomerPoint> getCustomerPoints() {
-        return customerPointService.viewAllCustomerPoints();
+        return customerPointService.listCustomerPoints();
     }
 
     @GetMapping("/{customerId}")

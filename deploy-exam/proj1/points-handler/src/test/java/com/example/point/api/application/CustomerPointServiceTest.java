@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public class CustomerPointServiceTest {
     @Test
-    void testViewAllCustomerPoints_Find() {
+    void testListCustomerPoints_Find() {
         // テストデータの準備
         List<CustomerPoint> testCustomerPoints = List.of(
                 new CustomerPoint("testId1", 100),
@@ -30,7 +30,7 @@ public class CustomerPointServiceTest {
         CustomerPointService customerPointService = new CustomerPointService(mockedRepo);
 
         // サービスの「全顧客ポイント取得」を呼び出し、結果を受け取る
-        List<CustomerPoint> actual = customerPointService.viewAllCustomerPoints();
+        List<CustomerPoint> actual = customerPointService.listCustomerPoints();
 
         Assertions.assertThat(actual).isNotNull();
         Assertions.assertThat(actual.size()).isEqualTo(testCustomerPoints.size());
@@ -43,14 +43,14 @@ public class CustomerPointServiceTest {
     }
 
     @Test
-    void testViewAllCustomerPoints_Empty() {
+    void testListCustomerPoints_Empty() {
         CustomerPointRepository mockedRepo = Mockito.mock(CustomerPointRepository.class);
 
         Mockito.doReturn(Collections.emptyList()).when(mockedRepo).findAll();
 
         CustomerPointService customerPointService = new CustomerPointService(mockedRepo);
 
-        List<CustomerPoint> actual = customerPointService.viewAllCustomerPoints();
+        List<CustomerPoint> actual = customerPointService.listCustomerPoints();
 
         Assertions.assertThat(actual).isNotNull();
         Assertions.assertThat(actual).isEmpty();
