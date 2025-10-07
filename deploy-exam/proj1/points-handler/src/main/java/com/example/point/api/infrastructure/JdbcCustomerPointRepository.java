@@ -22,7 +22,7 @@ public class JdbcCustomerPointRepository implements CustomerPointRepository {
                         SELECT customer_id, current_points FROM customer_points
                         ORDER BY customer_id ASC
                         """)
-                .query(DataClassRowMapper.newInstance(CustomerPoint.class))
+                .query(CustomerPoint.class)
                 .list();
     }
 
@@ -32,7 +32,7 @@ public class JdbcCustomerPointRepository implements CustomerPointRepository {
                         WHERE customer_id = :customerId
                         """)
                 .param("customerId", customerId)
-                .query(DataClassRowMapper.newInstance(CustomerPoint.class))
+                .query(CustomerPoint.class)
                 .optional();
     }
 }
