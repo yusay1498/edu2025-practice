@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -23,6 +22,6 @@ public class CustomerPointService {
 
     public CustomerPoint lookupCustomerPointById(String customerId) {
         return customerPointRepository.findByCustomerId(customerId)
-                .orElseThrow(() -> new CustomerNotFoundException(customerId));
+                .orElseThrow(() -> new CustomerPointNotFoundException(customerId));
     }
 }

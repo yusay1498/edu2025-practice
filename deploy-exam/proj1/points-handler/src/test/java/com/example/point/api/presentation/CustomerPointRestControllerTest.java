@@ -1,6 +1,6 @@
 package com.example.point.api.presentation;
 
-import com.example.point.api.application.CustomerNotFoundException;
+import com.example.point.api.application.CustomerPointNotFoundException;
 import com.example.point.api.application.CustomerPointService;
 import com.example.point.api.domain.entity.CustomerPoint;
 import org.assertj.core.api.Assertions;
@@ -59,7 +59,7 @@ public class CustomerPointRestControllerTest {
 
     @Test
     void testGetPointsByCustomerId_withNonexistentCustomerId() {
-        Mockito.doThrow(new CustomerNotFoundException("nonTestId"))
+        Mockito.doThrow(new CustomerPointNotFoundException("nonTestId"))
                 .when(mockedCustomerPointService)
                 .lookupCustomerPointById("nonTestId");
 
