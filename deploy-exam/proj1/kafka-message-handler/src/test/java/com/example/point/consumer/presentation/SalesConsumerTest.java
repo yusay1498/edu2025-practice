@@ -10,13 +10,10 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.kafka.core.KafkaOperations;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.util.ReflectionTestUtils;
 
@@ -29,13 +26,7 @@ import java.util.concurrent.atomic.AtomicReference;
 @SpringBootTest
 @DirtiesContext
 @Import(TestcontainersConfiguration.class)
-@AutoConfigureMockMvc
 class SalesConsumerTest {
-
-    @DynamicPropertySource
-    static void dynamicProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.sql.init.mode", () -> "always");
-    }
 
     @MockitoBean
     private CustomerPointService customerPointService;
