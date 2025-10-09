@@ -7,6 +7,7 @@ import com.example.point.consumer.domain.entity.Sales;
 import com.example.point.consumer.domain.entity.SalesItem;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,6 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicReference;
 
 @SpringBootTest
 @DirtiesContext
@@ -36,14 +36,14 @@ class SalesConsumerTest {
 
     @Test
     public void testConsumeKafkaMessage() throws Exception {
-        final AtomicReference<Sales> atomicRef = new AtomicReference<>();
         final CountDownLatch latch = new CountDownLatch(1);
 
-        Mockito.doAnswer(invocationOnMock -> {
-            atomicRef.set(invocationOnMock.getArgument(0, Sales.class));
+        Mockito.doAnswer(invocation -> {
             latch.countDown();
             return null;
         }).when(customerPointService).calculateCustomerPoint(Mockito.any());
+
+        ArgumentCaptor<Sales> salesCaptor = ArgumentCaptor.forClass(Sales.class);
 
         Customer customer = new Customer(1, "Alice", "Female");
         SalesItem item1 = new SalesItem(1, "Item A", 100, 2, 200);
@@ -64,7 +64,7 @@ class SalesConsumerTest {
         // Kafkaトピックにメッセージを送信
         kafkaOperations.sendDefault(sales);
 
-        if (!latch.await(10_000L, TimeUnit.MILLISECONDS)) {
+        if (!latch.await(5_000L, TimeUnit.MILLISECONDS)) {
             /*
              * 10秒待っても解錠されなかった場合、どこかに設定ミス等が存在する可能性が高いため、
              * テストを失敗させて終了します。
@@ -72,9 +72,12 @@ class SalesConsumerTest {
             Assertions.fail("Latch timeout");
         }
 
-        Mockito.verify(customerPointService).calculateCustomerPoint(sales);
+        Mockito.verify(customerPointService, Mockito.times(1))
+                .calculateCustomerPoint(salesCaptor.capture());
 
-        Assertions.assertThat(atomicRef.get()).isEqualTo(sales);
+        Sales result = salesCaptor.getValue();
+
+        Assertions.assertThat(result).isEqualTo(sales);
     }
 
 
