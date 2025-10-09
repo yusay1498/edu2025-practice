@@ -4,9 +4,6 @@ spring:
   kafka:
     template:
       default-topic: purchases
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     consumer:
       group-id: purchase-log
       auto-offset-reset: latest
