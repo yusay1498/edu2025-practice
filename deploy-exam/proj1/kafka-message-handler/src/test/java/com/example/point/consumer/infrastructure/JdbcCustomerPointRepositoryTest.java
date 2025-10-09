@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -58,7 +57,7 @@ class JdbcCustomerPointRepositoryTest {
                                 WHERE customer_id = :customerId
                         """)
                 .param("customerId", newCustomerPoint.customerId())
-                .query(DataClassRowMapper.newInstance(CustomerPoint.class))
+                .query(CustomerPoint.class)
                 .optional();
 
         Assertions.assertThat(insertedCustomerPoint).isNotEmpty();
@@ -87,7 +86,7 @@ class JdbcCustomerPointRepositoryTest {
                                 WHERE customer_id = :customerId
                         """)
                 .param("customerId", existingCustomerPoint.customerId())
-                .query(DataClassRowMapper.newInstance(CustomerPoint.class))
+                .query(CustomerPoint.class)
                 .optional();
 
         Assertions.assertThat(updatedCustomerPoint).isNotEmpty();

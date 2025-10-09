@@ -2,7 +2,6 @@ package com.example.point.consumer.infrastructure;
 
 import com.example.point.consumer.domain.entity.CustomerPoint;
 import com.example.point.consumer.domain.repository.CustomerPointRepository;
-import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 
@@ -22,7 +21,7 @@ public class JdbcCustomerPointRepository implements CustomerPointRepository {
                         WHERE customer_id = :customerId
                         """)
                 .param("customerId", customerId)
-                .query(DataClassRowMapper.newInstance(CustomerPoint.class))
+                .query(CustomerPoint.class)
                 .optional();
     }
 
