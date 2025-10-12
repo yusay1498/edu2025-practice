@@ -36,7 +36,7 @@ const PointPortal = () => {
                     <div className="customer_point">
                         <p>エムアイポイント</p>
                         <div className="customer_point_num">
-                            <p className="customer_point_num_main">{customerDetail.current_points}</p>
+                            <p className="customer_point_num_main">{customerDetail.currentPoints}</p>
                             <p className="customer_point_num_unit">ポイント</p>
                         </div>
                     </div>
