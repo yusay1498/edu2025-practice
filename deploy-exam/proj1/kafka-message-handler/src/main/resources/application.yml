@@ -6,7 +6,7 @@ spring:
       default-topic: purchases
     consumer:
       group-id: purchase-log
-      auto-offset-reset: latest
+      auto-offset-reset: earliest
       enable-auto-commit: true
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
