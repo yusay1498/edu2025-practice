@@ -81,12 +81,11 @@ services:
       - kafka
 
   nginx:
-    build:
-      context: ./customer-portal
-      dockerfile: Dockerfile
+    image: nginx:latest
     ports:
       - "5173:80"  # Nginxがホストするポート
     volumes:
       - ./customer-portal/dist:/usr/share/nginx/html  # Nginxのデフォルトのhtmlディレクトリにマウント
+      - ./customer-portal/nginx.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - points-api
