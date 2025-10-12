@@ -35,14 +35,14 @@ const PointPortal = () => {
                     <p className="customer_id">{customerDetail.customerId}</p>
                     <div className="customer_point">
                         <p>エムアイポイント</p>
-                        <div　className="customer_point_num">
-                            <p className="customer_point_num_main">{customerDetail.point}</p>
+                        <div className="customer_point_num">
+                            <p className="customer_point_num_main">{customerDetail.current_points}</p>
                             <p className="customer_point_num_unit">ポイント</p>
                         </div>
                     </div>
                 </div>
             ) : (
-                <div className="loading"></div>　// fetch遅延を回避
+                <div className="loading"></div> // fetch遅延を回避
             )}
         </div>
     )
