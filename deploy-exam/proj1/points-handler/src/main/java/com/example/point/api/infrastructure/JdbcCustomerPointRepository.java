@@ -2,7 +2,6 @@ package com.example.point.api.infrastructure;
 
 import com.example.point.api.domain.entity.CustomerPoint;
 import com.example.point.api.domain.repository.CustomerPointRepository;
-import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 
