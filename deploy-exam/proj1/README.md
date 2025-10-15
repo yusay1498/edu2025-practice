@@ -26,7 +26,7 @@ cd customer_portal/
 
 npm i
 
-npm run build -- --mode deployment
+npm run build -- --mode development
 ```
 
 ```bash
@@ -56,7 +56,7 @@ curl -X GET http://localhost:8080/points/testId
 
 npm i && \
 
-npm run build -- --mode deployment)
+npm run build -- --mode development)
 
 ./mvnw clean package
 
