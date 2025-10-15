@@ -1,12 +1,11 @@
 # proj1
 
-# 目次
+## 目次
 
 - [概要](#概要)
 - [要件](#要件)
 - [ビルド＆起動方法](#ビルド起動方法)
 - [APIのリクエストサンプル](#APIのリクエストサンプル)
-- [Webアプリの動作確認](#Webアプリの動作確認)
 - [一括処理](#一括処理)
 
 ## 概要
@@ -50,21 +49,14 @@ GET (findById)
 curl -X GET http://localhost:8080/points/testId
 ```
 
-## Webアプリの動作確認
-
-[http://localhost:3000/](http://localhost:3000/) にアクセス
-
-
 ### 一括処理
 
 ```bash
-cd customer-portal/
+(cd customer-portal/ && \
 
-npm i
+npm i && \
 
-npm run build -- --mode deployment
-
-cd ../
+npm run build -- --mode deployment)
 
 ./mvnw clean package
 
