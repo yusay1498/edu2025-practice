@@ -21,17 +21,25 @@
 
 ## ビルド＆起動方法
 
+### フロントのビルド
+
 ```bash
-cd customer_portal/
+cd customer-portal/
 
 npm i
 
 npm run build -- --mode development
 ```
 
+### バックエンドのビルド
+
 ```bash
 ./mvnw clean package
+```
 
+### 起動（Docker Compose）
+
+```bash
 docker compose up --build
 ```
 
