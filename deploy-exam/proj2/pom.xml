@@ -16,7 +16,7 @@
         <developer/>
     </developers>
     <modules>
-<!--        <module>kafka-consumer</module>-->
+        <module>kafka-consumer</module>
 <!--        <module>sales-metrics-api</module>-->
     </modules>
     <scm>
