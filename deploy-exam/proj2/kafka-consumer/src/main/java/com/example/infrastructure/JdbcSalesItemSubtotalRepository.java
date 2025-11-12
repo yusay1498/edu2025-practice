@@ -28,19 +28,19 @@ public class JdbcSalesItemSubtotalRepository implements SalesItemSubtotalReposit
 
     public Optional<SalesItemSubtotal> findByItemIdAndDate(int itemId, LocalDate date) {
         return jdbcClient.sql("""
-                SELECT
-                    id,
-                    item_id,
-                    sales_summary.date,
-                    total_amount AS amount,
-                    total_quantity AS quantity
-                FROM
-                    sales_summary
-                where
-                    item_id = :itemId
-                AND
-                    sales_summary.date = :date
-                """)
+                        SELECT
+                            id,
+                            item_id,
+                            sales_summary.date,
+                            total_amount AS amount,
+                            total_quantity AS quantity
+                        FROM
+                            sales_summary
+                        where
+                            item_id = :itemId
+                        AND
+                            sales_summary.date = :date
+                        """)
                 .param("itemId", itemId)
                 .param("date", date)
                 .query(SalesItemSubtotal.class)
@@ -59,13 +59,18 @@ public class JdbcSalesItemSubtotalRepository implements SalesItemSubtotalReposit
         }
 
         namedParameterJdbcTemplate.batchUpdate("""
-                INSERT INTO sales_summary (id, item_id, date, total_amount, total_quantity)
-                VALUES (:id, :itemId, :date, :totalAmount, :totalQuantity)
-                ON CONFLICT (item_id, date)
-                DO UPDATE
-                SET
-                    total_amount = sales_summary.total_amount + EXCLUDED.total_amount,
-                    total_quantity = sales_summary.total_quantity + EXCLUDED.total_quantity;
+                MERGE INTO sales_summary AS target
+                USING (
+                  VALUES (:id, :itemId, :date, :totalAmount, :totalQuantity)
+                ) AS src(id, item_id, date, total_amount, total_quantity)
+                ON (target.item_id = src.item_id AND target.date = src.date)
+                WHEN MATCHED THEN
+                  UPDATE SET
+                    total_amount   = target.total_amount + src.total_amount,
+                    total_quantity = target.total_quantity + src.total_quantity
+                WHEN NOT MATCHED THEN
+                  INSERT (id, item_id, date, total_amount, total_quantity)
+                  VALUES (src.id, src.item_id, src.date, src.total_amount, src.total_quantity);
                 """, salesSummaryBatchParams.toArray(new MapSqlParameterSource[0])
         );
 
