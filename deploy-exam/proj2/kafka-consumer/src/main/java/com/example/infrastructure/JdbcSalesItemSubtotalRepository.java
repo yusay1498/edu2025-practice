@@ -43,7 +43,7 @@ public class JdbcSalesItemSubtotalRepository implements SalesItemSubtotalReposit
                 """)
                 .param("itemId", itemId)
                 .param("date", date)
-                .query(DataClassRowMapper.newInstance(SalesItemSubtotal.class))
+                .query(SalesItemSubtotal.class)
                 .optional();
     }
 
