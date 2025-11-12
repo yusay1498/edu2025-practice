@@ -61,7 +61,7 @@ services:
     environment:
       SPRING_KAFKA_BOOTSTRAPSERVERS: kafka:9092
       SPRING_KAFKA_TEMPLATE_DEFAULTTOPIC: sales-log
-      APP_THREAD_NOISESPERSEC: 500
+      APP_THREAD_NOISESPERSEC: 2000
     depends_on:
       - kafka
 
