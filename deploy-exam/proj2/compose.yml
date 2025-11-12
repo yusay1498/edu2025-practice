@@ -32,32 +32,55 @@ services:
   dbgate:
     image: dbgate/dbgate
     environment:
-      CONNECTIONS: sales, master
+      CONNECTIONS: sales,master
+      LABEL_sales: postgres-sales
+      SERVER_sales: postgres-sales
+      USER_sales: postgres
+      PASSWORD_sales: postgres
+      PORT_sales: 5432
+      ENGINE_sales: postgres@dbgate-plugin-postgres
 
-      LABEL_master: postgres-sales
-      SERVER_master: postgres-sales
+      LABEL_master: postgres-customer-item
+      SERVER_master: postgres-customer-item
       USER_master: postgres
       PASSWORD_master: postgres
       PORT_master: 5432
       ENGINE_master: postgres@dbgate-plugin-postgres
-
-      LABEL_purchase: postgres-customer-item
-      SERVER_purchase: postgres-customer-item
-      USER_purchase: postgres
-      PASSWORD_purchase: postgres
-      PORT_purchase: 5432
-      ENGINE_purchase: postgres@dbgate-plugin-postgres
+    ports:
+      - "5480:3000"
+    depends_on:
+      postgres-sales:
+        condition: service_healthy
+      postgres-customer-item:
+        condition: service_healthy
 
   dummy-sales-log:
     image: ghcr.io/yo1000/dummy-sales-log:latest
     ports:
       - 8081:8080
     environment:
-      SPRING_KAFKA_BOOTSTRAPSERVERS: broker:29092
+      SPRING_KAFKA_BOOTSTRAPSERVERS: kafka:9092
       SPRING_KAFKA_TEMPLATE_DEFAULTTOPIC: sales-log
       APP_THREAD_NOISESPERSEC: 500
     depends_on:
-      - broker
+      - kafka
+
+  kafka-consumer:
+    build:
+      context: ./kafka-consumer
+      args:
+        JAR: ./target/*.jar
+    environment:
+      SPRING_KAFKA_CONSUMER_GROUP_ID: sales-log-group
+      SPRING_KAFKA_BOOTSTRAPSERVERS: kafka:9092
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-sales:5432/sales
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_KAFKA_SECURITY_PROTOCOL: PLAINTEXT
+      SPRING_KAFKA_PROPERTIES_SASL_CLIENT_CALLBACK_HANDLER_CLASS:
+    depends_on:
+      - kafka
+      - postgres-sales
 
   kafka:
     image: apache/kafka-native
