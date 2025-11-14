@@ -27,9 +27,6 @@ import java.util.concurrent.TimeUnit;
 class SalesLogConsumerTest {
     @DynamicPropertySource
     static void dynamicProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.sql.init.mode", () -> "always");
-
-        // シリアライズ設定
         registry.add("spring.kafka.producer.value-serializer", () -> "org.springframework.kafka.support.serializer.JsonSerializer");
         registry.add("spring.kafka.consumer.value-deserializer", () -> "org.springframework.kafka.support.serializer.JsonDeserializer");
     }
@@ -42,7 +39,7 @@ class SalesLogConsumerTest {
 
     @Test
     void testListenKafkaMessage() throws Exception {
-        final CountDownLatch latch = new CountDownLatch(1);
+        CountDownLatch latch = new CountDownLatch(1);
 
         Mockito.doAnswer(invocationOnMock -> {
             latch.countDown();
