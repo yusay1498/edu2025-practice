@@ -28,7 +28,6 @@ class SalesLogConsumerTest {
     @DynamicPropertySource
     static void dynamicProperties(DynamicPropertyRegistry registry) {
         registry.add("spring.kafka.producer.value-serializer", () -> "org.springframework.kafka.support.serializer.JsonSerializer");
-        registry.add("spring.kafka.consumer.value-deserializer", () -> "org.springframework.kafka.support.serializer.JsonDeserializer");
     }
 
     @MockitoBean
@@ -44,7 +43,7 @@ class SalesLogConsumerTest {
         Mockito.doAnswer(invocationOnMock -> {
             latch.countDown();
             return null;
-        }).when(salesEventApplicationService).register(Mockito.any(),  Mockito.any());
+        }).when(salesEventApplicationService).register(Mockito.any(), Mockito.any());
 
         ArgumentCaptor<List<Sales>> salesCaptor = ArgumentCaptor.forClass(List.class);
 
