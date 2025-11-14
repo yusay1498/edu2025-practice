@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: sales-metrics-api
+
+app:
+  cors:
+    allowed-origins:

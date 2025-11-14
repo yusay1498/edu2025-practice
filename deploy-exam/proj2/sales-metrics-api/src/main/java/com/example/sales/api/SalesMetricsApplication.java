@@ -1,0 +1,13 @@
+package com.example.sales.api;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class SalesMetricsApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(SalesMetricsApplication.class, args);
+    }
+
+}
