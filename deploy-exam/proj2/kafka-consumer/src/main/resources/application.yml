@@ -17,4 +17,4 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.trusted.packages: "*"
-        spring.json.value.default.type: com.example.domain.entity.SalesLog
+        spring.json.value.default.type: com.example.kafka.consumer.domain.entity.SalesLog
