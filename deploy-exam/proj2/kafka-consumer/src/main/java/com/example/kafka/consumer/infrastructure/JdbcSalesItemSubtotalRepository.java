@@ -58,12 +58,12 @@ public class JdbcSalesItemSubtotalRepository implements SalesItemSubtotalReposit
         }
 
         namedParameterJdbcTemplate.batchUpdate("""
-                INSERT INTO sales_summary (id, item_id, date, total_quantity, total_price)
-                VALUES (:id, :itemId, :date, :totalQuantity, :totalPrice)
+                INSERT INTO sales_summary (id, item_id, date, total_amount, total_quantity)
+                VALUES (:id, :itemId, :date, :totalAmount, :totalQuantity)
                 ON CONFLICT (item_id, date)
                 DO UPDATE
                 SET total_quantity = sales_summary.total_quantity + EXCLUDED.total_quantity,
-                    total_price = sales_summary.total_price + EXCLUDED.total_price
+                    total_amount = sales_summary.total_amount + EXCLUDED.total_amount
                 """, salesSummaryBatchParams.toArray(new MapSqlParameterSource[0])
         );
 
