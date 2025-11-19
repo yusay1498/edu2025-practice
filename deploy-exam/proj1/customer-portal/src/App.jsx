@@ -1,7 +1,7 @@
-import '../../assets/styles/main.scss'
+import './assets/styles/main.scss'
 import { BrowserRouter, Route, Routes} from 'react-router-dom'
-import CustomerSearch from "../pages/CustomerSearch.jsx";
-import PointPortal from "../pages/PointPortal.jsx";
+import CustomerSearch from "./pages/CustomerSearch.jsx";
+import PointPortal from "./pages/PointPortal.jsx";
 
 function App() {
   return (
