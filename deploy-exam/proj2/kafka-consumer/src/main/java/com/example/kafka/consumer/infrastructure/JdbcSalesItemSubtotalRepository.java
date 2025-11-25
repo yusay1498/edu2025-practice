@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,7 +58,7 @@ public class JdbcSalesItemSubtotalRepository implements SalesItemSubtotalReposit
                     .addValue("totalQuantity", salesItemSubtotal.quantity()));
         }
 
-        namedParameterJdbcTemplate.batchUpdate("""
+        int[] updateCounts = namedParameterJdbcTemplate.batchUpdate("""
                 INSERT INTO sales_summary (id, item_id, date, total_amount, total_quantity)
                 VALUES (:id, :itemId, :date, :totalAmount, :totalQuantity)
                 ON CONFLICT (item_id, date)
@@ -66,6 +67,10 @@ public class JdbcSalesItemSubtotalRepository implements SalesItemSubtotalReposit
                     total_amount = sales_summary.total_amount + EXCLUDED.total_amount
                 """, salesSummaryBatchParams.toArray(new MapSqlParameterSource[0])
         );
+
+        if (Arrays.stream(updateCounts).sum() != salesItemSubtotalList.size()) {
+            throw new RuntimeException("Batch update returned unexpected number of results");
+        }
 
         return salesItemSubtotalList.stream()
                 .map(salesItemSubtotal -> findByItemIdAndDate(salesItemSubtotal.itemId(), salesItemSubtotal.date())
