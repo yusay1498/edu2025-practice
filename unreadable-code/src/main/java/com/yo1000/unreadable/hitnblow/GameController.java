@@ -21,24 +21,21 @@ public class GameController {
         System.out.println("Secret code is " + digits + "-digits.");
         System.out.println("*".repeat(digits));
 
-        // 答えの生成
         String answer = answerHandler.createAnswer();
 
         while (true) {
-            // ユーザーの答えの入力
             System.out.print("> ");
             String userAnswer = scanner.nextLine();
 
-            // フォーマットに沿ってない回答の場合やり直し
             if (!userAnswerHandler.isValidInput(userAnswer)) continue;
 
-            HitAndBlow hitAndBlow = hitAndBlowCounter.countHitAndBlow(answer, userAnswer);
+            HitAndBlow hitAndBlow = hitAndBlowCounter.count(answer, userAnswer);
 
             System.out.println("turn | " + hitAndBlow.turn());
-            System.out.println("hit  | " + hitAndBlow.hits());
+            System.out.println("hit  | " + hitAndBlow.hit());
             System.out.println("blow | " + hitAndBlow.blow());
 
-            if (hitAndBlow.hits() == digits) {
+            if (hitAndBlow.hit() == digits) {
                 System.out.println("\nCongrats!");
                 return;
             }

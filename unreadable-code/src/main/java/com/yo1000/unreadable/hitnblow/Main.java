@@ -3,9 +3,10 @@ package com.yo1000.unreadable.hitnblow;
 import java.util.Scanner;
 
 public class Main {
+    static private final int DEFAULT_DIGITS = 4;
+
     public static void main(String[] args) {
-        // 何も入力されない場合の桁数
-        int digits = 4;
+        int digits = DEFAULT_DIGITS;
         Scanner scanner = new Scanner(System.in);
 
         // ユーザーが桁数を指定した場合の処理
