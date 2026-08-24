@@ -3,15 +3,15 @@ package com.yo1000.unreadable.hitnblow;
 import java.security.SecureRandom;
 import java.util.random.RandomGenerator;
 
-public class AnswerHandler {
+public class AnswerCreator {
     private final RandomGenerator random = new SecureRandom();
     private final int digits;
 
-    public AnswerHandler(int digits) {
+    public AnswerCreator(int digits) {
         this.digits = digits;
     }
 
-    public String createAnswer() {
+    public String create() {
         int min = 0;
         int max = (int) Math.pow(10, digits) - 1;
 

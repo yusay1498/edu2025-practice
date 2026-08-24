@@ -5,14 +5,14 @@ import java.util.Scanner;
 public class GameController {
     private final int digits;
     private final Scanner scanner;
-    private final AnswerHandler answerHandler;
+    private final AnswerCreator answerCreator;
     private final UserAnswerHandler userAnswerHandler;
     private final HitAndBlowCounter hitAndBlowCounter;
 
     public GameController(int digits, Scanner scanner) {
         this.digits = digits;
         this.scanner = scanner;
-        this.answerHandler = new AnswerHandler(digits);
+        this.answerCreator = new AnswerCreator(digits);
         this.userAnswerHandler = new UserAnswerHandler(digits);
         this.hitAndBlowCounter = new HitAndBlowCounter(digits);
     }
@@ -21,7 +21,7 @@ public class GameController {
         System.out.println("Secret code is " + digits + "-digits.");
         System.out.println("*".repeat(digits));
 
-        String answer = answerHandler.createAnswer();
+        String answer = answerCreator.create();
 
         while (true) {
             System.out.print("> ");
