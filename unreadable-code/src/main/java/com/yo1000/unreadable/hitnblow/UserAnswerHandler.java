@@ -7,7 +7,7 @@ public class UserAnswerHandler {
         this.digits = digits;
     }
 
-    public boolean isValidInput(String userAnswer) {
+    public boolean validate(String userAnswer) {
         if (userAnswer.length() != digits) {
             System.out.println("Input must be " + digits + " digits long.");
             return false;

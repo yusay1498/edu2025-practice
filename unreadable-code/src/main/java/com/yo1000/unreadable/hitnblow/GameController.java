@@ -27,7 +27,7 @@ public class GameController {
             System.out.print("> ");
             String userAnswer = scanner.nextLine();
 
-            if (!userAnswerHandler.isValidInput(userAnswer)) continue;
+            if (!userAnswerHandler.validate(userAnswer)) continue;
 
             HitAndBlow hitAndBlow = hitAndBlowCounter.count(answer, userAnswer);
 
