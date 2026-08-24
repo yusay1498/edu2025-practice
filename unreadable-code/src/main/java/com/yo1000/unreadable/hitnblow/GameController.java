@@ -6,14 +6,14 @@ public class GameController {
     private final int digits;
     private final Scanner scanner;
     private final AnswerCreator answerCreator;
-    private final UserAnswerHandler userAnswerHandler;
+    private final AnswerValidator answerValidator;
     private final HitAndBlowCounter hitAndBlowCounter;
 
     public GameController(int digits, Scanner scanner) {
         this.digits = digits;
         this.scanner = scanner;
         this.answerCreator = new AnswerCreator(digits);
-        this.userAnswerHandler = new UserAnswerHandler(digits);
+        this.answerValidator = new AnswerValidator(digits);
         this.hitAndBlowCounter = new HitAndBlowCounter(digits);
     }
 
@@ -27,7 +27,7 @@ public class GameController {
             System.out.print("> ");
             String userAnswer = scanner.nextLine();
 
-            if (!userAnswerHandler.validate(userAnswer)) continue;
+            if (!answerValidator.validate(userAnswer)) continue;
 
             HitAndBlow hitAndBlow = hitAndBlowCounter.count(answer, userAnswer);
 

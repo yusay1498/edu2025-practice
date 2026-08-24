@@ -1,9 +1,9 @@
 package com.yo1000.unreadable.hitnblow;
 
-public class UserAnswerHandler {
+public class AnswerValidator {
     private final int digits;
 
-    public UserAnswerHandler(int digits) {
+    public AnswerValidator(int digits) {
         this.digits = digits;
     }
 
